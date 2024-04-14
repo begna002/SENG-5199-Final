@@ -25,7 +25,7 @@ struct CuisineRow: View {
                         NavigationLink {
                             CusineDetail(foodItem: food)
                         } label: {
-                            CuisineItem(foodItem: food)
+                            CuisineItem(foodItem: food, width: 140, height: 140)
                         }
                     }
                 }

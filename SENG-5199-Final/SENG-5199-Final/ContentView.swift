@@ -10,12 +10,12 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
 
     @State private var selection: Tab = .explore
     enum Tab {
         case explore
         case search
+        case saved
     }
     
     var body: some View {
@@ -30,7 +30,11 @@ struct ContentView: View {
                     Label("Search", systemImage: "magnifyingglass.circle")
                 }
                 .tag(Tab.search)
-            
+            SavedView()
+                .tabItem {
+                    Label("Saved", systemImage: "checklist.checked.rtl")
+                }
+                .tag(Tab.search)
         }
     }
 

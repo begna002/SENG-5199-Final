@@ -10,15 +10,18 @@ import SwiftUI
 
 struct CuisineItem: View {
     var foodItem: FoodItem
-
+    var width: CGFloat
+    var height: CGFloat
+    var scale: CGFloat = 2
+    
     var body: some View {
         VStack(alignment: .leading) {
             AsyncImage(url: URL(string: foodItem.image),
-                              scale: 1)
-                .frame(width: 155, height: 155)
+                              scale: scale)
+                .frame(width: width, height: height)
                 .cornerRadius(5)
             Text(foodItem.title)
-                .frame(width: 155)
+                .frame(width: 140)
                     .truncationMode(.tail)
                 .font(.caption)
         }
