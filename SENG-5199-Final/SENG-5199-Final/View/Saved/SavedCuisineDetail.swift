@@ -22,10 +22,15 @@ struct SavedCuisineDetail: View {
     var body: some View {
         List {
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
-                AsyncImage(url: URL(string: foodItem.image),
-                           scale: 1)
-                .frame(width: 300, height: 250)
-                .cornerRadius(5)
+                VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+                    Text(foodItem.title)
+                    AsyncImage(url: URL(string: foodItem.image),
+                               scale: 1)
+                    .frame(width: 300, height: 250)
+                    .cornerRadius(5)
+                }
+                .frame(maxWidth: .infinity)
+
                 HStack {
                     Text(foodItem.title)
 //                    Button("Save") {

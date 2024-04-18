@@ -27,7 +27,7 @@ struct CuisineTabItem: View {
             Text(foodItem.title)
                 .font(.subheadline)
                 .frame(width: 200, height: 25)
-                .background(Capsule().fill(.white))
+                .background(Rectangle().fill(.white).stroke(.gray, lineWidth: 1))
                 .offset(y: -75)
         }
     }

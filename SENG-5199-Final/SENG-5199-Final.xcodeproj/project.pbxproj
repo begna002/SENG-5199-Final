@@ -30,6 +30,7 @@
 		740DDC912BCC8B22003D8501 /* SavedCuisineDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DDC902BCC8B22003D8501 /* SavedCuisineDetail.swift */; };
 		740DDC932BCC9136003D8501 /* CusineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DDC922BCC9136003D8501 /* CusineTab.swift */; };
 		740DDC952BCC943D003D8501 /* CuisineTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DDC942BCC943D003D8501 /* CuisineTabItem.swift */; };
+		74C21CC72BD1C7670025E368 /* CuisineFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C21CC62BD1C7670025E368 /* CuisineFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		740DDC902BCC8B22003D8501 /* SavedCuisineDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCuisineDetail.swift; sourceTree = "<group>"; };
 		740DDC922BCC9136003D8501 /* CusineTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusineTab.swift; sourceTree = "<group>"; };
 		740DDC942BCC943D003D8501 /* CuisineTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineTabItem.swift; sourceTree = "<group>"; };
+		74C21CC62BD1C7670025E368 /* CuisineFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				740DDC672BCC6F45003D8501 /* CuisinePlaceholderView.swift */,
 				740DDC922BCC9136003D8501 /* CusineTab.swift */,
 				740DDC942BCC943D003D8501 /* CuisineTabItem.swift */,
+				74C21CC62BD1C7670025E368 /* CuisineFilter.swift */,
 			);
 			path = Cuisine;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				740DDC8F2BCC8B19003D8501 /* SavedCuisineItem.swift in Sources */,
 				740DDBEF2BCABDCE003D8501 /* CuisineItem.swift in Sources */,
 				740DDC6A2BCC7882003D8501 /* SearchResults.swift in Sources */,
+				74C21CC72BD1C7670025E368 /* CuisineFilter.swift in Sources */,
 				740DDBE02BC068CA003D8501 /* FoodSearchService.swift in Sources */,
 				740DDC6C2BCC7D1B003D8501 /* LoadingIndicatorView.swift in Sources */,
 				740DDC912BCC8B22003D8501 /* SavedCuisineDetail.swift in Sources */,
@@ -404,6 +408,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SENG-5199-Final/Preview Content\"";
+				DEVELOPMENT_TEAM = UN9M2C4QMX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -432,6 +437,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SENG-5199-Final/Preview Content\"";
+				DEVELOPMENT_TEAM = UN9M2C4QMX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

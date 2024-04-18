@@ -30,3 +30,20 @@ enum CusineType: CaseIterable {
         }
     }
 }
+
+
+enum AllCusineType: String, CaseIterable, Identifiable {
+    case African = "African"
+    case American = "American"
+    case Asian = "Asian"
+    case Chinese = "Chinese"
+    case French = "French"
+    case Greek = "Greek"
+    case Indian = "Indian"
+    case Italian = "Italian"
+    case Japanese = "Japanese"
+    case Mediterranean = "Mediterranean"
+    case Mexican = "Mexican"
+    
+    var id: String { self.rawValue }
+}

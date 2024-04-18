@@ -9,15 +9,19 @@ import Foundation
 import SwiftUI
 
 struct SearchResults: View {
-    @State var cuisines: [FoodItem] = []
-    
-    let columns = [
-        GridItem(.adaptive(minimum: 150))
-    ]
-    
+    var cuisines: [FoodItem] = []
+    var size: CGFloat = 150
+    var spacing: CGFloat = 20
+    var isSearch: Bool
+    var getMore: () -> Void
+
     var body: some View {
+        let columns = [
+            GridItem(.adaptive(minimum: size))
+        ]
+        
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
+            LazyVGrid(columns: columns, spacing: spacing) {
                 ForEach(cuisines) { food in
                     NavigationLink {
                         CusineDetail(foodItem: food)
@@ -29,6 +33,18 @@ struct SearchResults: View {
                 .listRowBackground(Color.clear)
             }
             .padding(.horizontal)
+            
+            if (isSearch) {
+                Button("More") {
+                    getMore()
+                }
+                .padding()
+                .overlay(
+                    Capsule()
+                        .stroke(.gray, lineWidth: 1)
+                )
+                .padding([.leading, .trailing, .top], 20)
+            }
         }
     }
 }

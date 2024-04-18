@@ -11,10 +11,6 @@ struct FoodResponse: Codable  {
     var results: [FoodItem]
 }
 
-struct FoodRandomResponse: Codable  {
-    var recipes: [FoodItem]
-}
-
 struct FoodItem: Codable, Identifiable  {
     var id: Int
     var title: String

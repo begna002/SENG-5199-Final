@@ -34,11 +34,3 @@ struct CuisineRow: View {
         }
     }
 }
-
-//#Preview {
-//    let landmarks = ModelData().landmarks
-//    return CusineRow(
-//        categoryName: landmarks[0].category.rawValue,
-//        items: Array(landmarks.prefix(4))
-//    )
-//}

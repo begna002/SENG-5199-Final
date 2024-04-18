@@ -69,7 +69,7 @@ final class RecipeIngredientData: Identifiable {
 @Model
 final class RecipeInstructionsData {
     internal init(_ steps: [RecipeStepData]) {
-        self.steps = steps
+        self.steps = steps.sorted(by: { $0.number < $1.number })
     }
     
     var steps: [RecipeStepData]

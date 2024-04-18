@@ -18,7 +18,7 @@ struct SavedView: View {
     ]
     
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             ScrollView {
                 Button("Delete All") {
                     Task {
@@ -45,8 +45,6 @@ struct SavedView: View {
                 .padding(.horizontal)
             } 
             .navigationTitle("Saved")
-        } detail: {
-            Text("Saved")
         }
     }
     

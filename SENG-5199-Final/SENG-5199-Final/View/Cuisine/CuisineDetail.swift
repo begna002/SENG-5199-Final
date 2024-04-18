@@ -23,13 +23,21 @@ struct CusineDetail: View {
     var body: some View {
         NavigationStack {
             List {
-                VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
-                    AsyncImage(url: URL(string: foodItem.image),
-                               scale: 1)
-                    .frame(width: 300, height: 250)
-                    .cornerRadius(5)
-                    Text(foodItem.title)
-                        
+                VStack(alignment: .center) {
+                    VStack(alignment: .center) {
+                        Text(foodItem.title)
+                        AsyncImage(url: URL(string: foodItem.image),
+                                   scale: 1)
+                        .frame(width: 300, height: 250)
+                        .cornerRadius(5)
+                        Button("Save Recipe") {
+                            saveFood()
+                        }
+                        .disabled(saveDisabled)
+                    }
+                    .frame(maxWidth: .infinity)
+   
+                    
                     Spacer()
                     HStack(spacing: 30) {
                         VStack(alignment: .center) {
@@ -174,14 +182,6 @@ struct CusineDetail: View {
                 }
             }.listSectionSpacing(0.5)
         }
-        .toolbar {
-            Button("Save") {
-                Task {
-                    saveFood()
-                }
-            }
-            .disabled(saveDisabled)
-        }
         .task {
             if (isSaved()) {
                 saveDisabled = true
@@ -230,5 +230,6 @@ struct CusineDetail: View {
         }
         let newFoodData: FoodItemData = foodItem.generateData()
         modelContext.insert(newFoodData)
+        saveDisabled = true
     }
 }

@@ -11,10 +11,11 @@ import SwiftUI
 struct CusineView: View {
     @State var cuisines: Dictionary<String, [FoodItem]> = [:]
     @State var cuisineTabResults: [FoodItem] = []
+    @StateObject var filter = Filter.shared
 
     var body: some View {
         VStack {
-            NavigationSplitView {
+            NavigationStack {
                 if (cuisines.isEmpty) {
                     CusinePlaceholderView()
                 } else {
@@ -27,30 +28,46 @@ struct CusineView: View {
                             .listRowBackground(Color.clear)
                         }
                         
-                        ForEach(CusineType.allCases, id: \.self) { key in
-                            let foodResponse = cuisines[key.Name]
-                            if let foodResponse {
-                                CuisineRow(cusineName: key.Name, foodList: foodResponse)
+                        CuisineFilter()
+                        
+                        if (filter.selectedCusine != "") {
+                            if (filter.fetching) {
+                                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+                                    LoadingIndicator()
+                                }
+                                .frame(maxWidth: .infinity)
+                                .listRowBackground(Color.clear)
+                            } else {
+                                let foodResponse = filter.cuisinesFilter[filter.selectedCusine]
+                                if let foodResponse {
+                                    SearchResults(cuisines: foodResponse, size: 150, spacing: 40, isSearch: false, getMore: {})
+                                        .listRowBackground(Color.clear)
+                                }
                             }
+                        } else {
+                            ForEach(CusineType.allCases, id: \.self) { key in
+                                let foodResponse = cuisines[key.Name]
+                                if let foodResponse {
+                                    CuisineRow(cusineName: key.Name, foodList: foodResponse)
+                                }
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.clear)
                         }
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.clear)
                     }
                     .navigationTitle("Featured")
                 }
-            } detail: {
-                Text("Featured")
-            }
+            } 
         }
         .task {
             if (cuisines.isEmpty) {
-                await fetchIngrediants()
-                await fetchRandomIngrediants()
+                fetchIngrediants()
+                fetchRandomIngrediants()
             }
         }
     }
     
-    func fetchIngrediants() async {
+    func fetchIngrediants() {
         for cuisineType in CusineType.allCases {
             getIngrediantsByCusine(cuisineType.Name, completion: { response in
                 
@@ -64,7 +81,7 @@ struct CusineView: View {
         }
     }
     
-    func fetchRandomIngrediants() async {
+    func fetchRandomIngrediants() {
         getRandomIngrediants(completion: { response in
             if let response {
                 if (!response.results.isEmpty) {
@@ -72,7 +89,7 @@ struct CusineView: View {
                 }
             }
         })
-    }
+    }    
 }
 
 

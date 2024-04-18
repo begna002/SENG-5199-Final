@@ -10,13 +10,13 @@ import Foundation
 let baseUrl = "https://api.spoonacular.com/"
 let commonParams = "&fillIngredients=true&addRecipeInformation=true&instructionsRequired=true&addRecipeNutrition=true"
 
-func getIngrediants(_ query: String, completion: @escaping (FoodResponse?) -> Void){
+func getIngrediants(_ offset: Int, _ query: String, completion: @escaping (FoodResponse?) -> Void){
     if (query == "") {
         completion(nil)
         return
     }
     
-    let url = URL(string: "\(baseUrl)/recipes/complexSearch/?query=\(query)&number=20&apiKey=19066718cb0143a080d795d5c3a5cd22\(commonParams)" )!
+    let url = URL(string: "\(baseUrl)/recipes/complexSearch/?query=\(query)&number=20&offset=\(offset)&apiKey=19066718cb0143a080d795d5c3a5cd22\(commonParams)" )!
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     
@@ -36,19 +36,19 @@ func getIngrediants(_ query: String, completion: @escaping (FoodResponse?) -> Vo
             let foodResponse = try JSONDecoder().decode(FoodResponse.self, from: responseData)
             completion(foodResponse)
         } catch {
-          print("Error decoding JSON data: \(error)")
+            print("Error decoding JSON data: \(error), url: \(url)")
         }
     }
     task.resume()
 }
 
-func getIngrediantsByCusine(_ cuisine: String, completion: @escaping (FoodResponse?) -> Void){
+func getIngrediantsByCusine(number: Int = 10, _ cuisine: String, completion: @escaping (FoodResponse?) -> Void){
     if (cuisine == "") {
         completion(nil)
         return
     }
     
-    let url = URL(string: "\(baseUrl)/recipes/complexSearch/?cuisine=\(cuisine)&apiKey=19066718cb0143a080d795d5c3a5cd22\(commonParams)" )!
+    let url = URL(string: "\(baseUrl)/recipes/complexSearch/?cuisine=\(cuisine)&number=\(number)&apiKey=19066718cb0143a080d795d5c3a5cd22\(commonParams)" )!
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     
@@ -68,7 +68,7 @@ func getIngrediantsByCusine(_ cuisine: String, completion: @escaping (FoodRespon
             let foodResponse = try JSONDecoder().decode(FoodResponse.self, from: responseData)
             completion(foodResponse)
         } catch {
-          print("Error decoding JSON data: \(error)")
+            print("Error decoding JSON data: \(error), url: \(url)")
         }
     }
     task.resume()

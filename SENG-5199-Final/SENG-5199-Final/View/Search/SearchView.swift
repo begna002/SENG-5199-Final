@@ -12,9 +12,10 @@ struct SearchView: View {
     @State var text: String = ""
     @State var cuisines: [FoodItem]?
     @State var fetching: Bool = false
+    @State var offset: Int = 0
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             VStack(alignment: .leading) {
                 HStack {
                     TextField("Enter", text: $text)
@@ -26,7 +27,6 @@ struct SearchView: View {
                         .padding([.leading, .trailing], 20)
                         .frame(height: 150)
                         .onSubmit {
-                            fetching = true
                             submitSearch()
                         }
                 }.frame(height: 50)
@@ -41,23 +41,44 @@ struct SearchView: View {
                 
                 Spacer()
                 if let cuisines {
-                    SearchResults(cuisines: cuisines)
+                    SearchResults(cuisines: cuisines, isSearch: true, getMore: {
+                        fetchMore()
+                    })
                 }
             }
             .navigationTitle("Search")
-        } detail: {
-            Text("Search")
         }
     }
     
     func submitSearch() {
-        cuisines = nil
         if (text != "") {
-            getIngrediants(text, completion: { response in
+            cuisines = nil
+            fetching = true
+            getIngrediants(offset, text, completion: { response in
                 if let response {
                     if (!response.results.isEmpty) {
                         cuisines = response.results
                         fetching = false
+                    }
+                }
+            })
+        }
+    }
+    
+    func fetchMore() {
+        offset += 20
+        if (text != "") {
+            getIngrediants(offset, text, completion: { response in
+                if let response {
+                    if (!response.results.isEmpty) {
+                        let savedCuisines = cuisines
+                        cuisines = nil
+                        if var savedCuisines {
+                            let newList = savedCuisines + response.results
+                            cuisines = newList
+                        } else {
+                            cuisines = response.results
+                        }
                     }
                 }
             })
