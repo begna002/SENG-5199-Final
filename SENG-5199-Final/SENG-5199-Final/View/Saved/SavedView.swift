@@ -20,17 +20,21 @@ struct SavedView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Button("Delete All") {
-                    Task {
-                        deleteAll()
-                    }
+                Button(action: {
+                    deleteAll()
+                  }) {
+                    Text("Delete All")
+                        .font(.subheadline)
+                        .frame(width: 125, height: 25)
+                        .background(Capsule()
+                            .fill(.white)
+                            .stroke(.gray, lineWidth: 1))
+                        .padding()
+                        .padding([.leading, .trailing], 20)
+                        .opacity(cuisines.isEmpty ? 0 : 1)
+                        .disabled(cuisines.isEmpty)
                 }
-                .padding()
-                .overlay(
-                    Capsule()
-                        .stroke(.gray, lineWidth: 1)
-                )
-                .padding([.leading, .trailing], 20)
+                
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(cuisines) { food in
                         NavigationLink {

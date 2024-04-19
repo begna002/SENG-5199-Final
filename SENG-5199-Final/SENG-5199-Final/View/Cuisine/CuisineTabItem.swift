@@ -18,7 +18,6 @@ struct CuisineTabItem: View {
         ZStack(alignment: .center) {
             AsyncImage(url: URL(string: foodItem.image),
                        scale: scale)
-            .frame(width: .infinity, height: .infinity)
                 .scaledToFill()
                 .frame(height: 200)
                 .clipped()

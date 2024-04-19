@@ -20,11 +20,28 @@ struct SearchView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 HStack {
-                    TextField("Enter", text: $text)
+                    TextField("Enter", text: $text) {
+                        
+                    }
                         .padding()
                         .overlay(
-                            Capsule()
-                                .stroke(.gray, lineWidth: 1)
+                            ZStack {
+                                Capsule()
+                                    .stroke(.gray, lineWidth: 1)
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        text = ""
+                                      }) {
+                                          Image(systemName: "xmark.circle")
+                                                                .frame(width: 30, height: 30)
+                                    }
+                                      .padding(.trailing, 10)
+                                      .opacity(text.isEmpty ? 0 : 1)
+                                      .disabled(text.isEmpty)
+                                    
+                                }
+                            }
                         )
                         .padding([.leading, .trailing], 20)
                         .frame(height: 150)

@@ -10,7 +10,7 @@ import Foundation
 let baseUrl = "https://api.spoonacular.com/"
 let commonParams = "&fillIngredients=true&addRecipeInformation=true&instructionsRequired=true&addRecipeNutrition=true"
 
-func getIngrediants(_ offset: Int, _ query: String, completion: @escaping (FoodResponse?) -> Void){
+func getIngrediants(_ offset: Int, _ query: String, completion: @escaping (FoodResponse?) -> Void, _ retryCount: Int = 0){
     if (query == "") {
         completion(nil)
         return
@@ -37,13 +37,20 @@ func getIngrediants(_ offset: Int, _ query: String, completion: @escaping (FoodR
             completion(foodResponse)
         } catch {
             print("Error decoding JSON data: \(error), url: \(url)")
-            completion(nil)
+            if (retryCount < 3) {
+                print("Retrying call to getIngrediantsByCusine")
+                var retry = retryCount + 1
+                getIngrediants(offset, query, completion: { response in
+                     completion(response) }, retry)
+            } else {
+                completion(nil)
+            }
         }
     }
     task.resume()
 }
 
-func getIngrediantsByCusine(number: Int = 10, _ cuisine: String, completion: @escaping (FoodResponse?) -> Void){
+func getIngrediantsByCusine(number: Int = 10, _ cuisine: String, completion: @escaping (FoodResponse?) -> Void, _ retryCount: Int = 0){
     if (cuisine == "") {
         completion(nil)
         return
@@ -70,13 +77,20 @@ func getIngrediantsByCusine(number: Int = 10, _ cuisine: String, completion: @es
             completion(foodResponse)
         } catch {
             print("Error decoding JSON data: \(error), url: \(url)")
-            completion(nil)
+            if (retryCount < 3) {
+                print("Retrying call to getIngrediantsByCusine")
+                var retry = retryCount + 1
+                getIngrediantsByCusine(number: number, cuisine, completion: { response in
+                     completion(response) }, retry)
+            } else {
+                completion(nil)
+            }
         }
     }
     task.resume()
 }
 
-func getRandomIngrediants(completion: @escaping (FoodResponse?) -> Void){
+func getRandomIngrediants(completion: @escaping (FoodResponse?) -> Void, _ retryCount: Int = 0){
     let query = foodSearches.randomElement() ?? "Pizza"
     let url = URL(string: "\(baseUrl)/recipes/complexSearch?query=\(query)&number=10&apiKey=19066718cb0143a080d795d5c3a5cd22\(commonParams)" )!
     var request = URLRequest(url: url)
@@ -99,7 +113,14 @@ func getRandomIngrediants(completion: @escaping (FoodResponse?) -> Void){
             completion(foodResponse)
         } catch {
           print("Error decoding JSON data: \(error), url: \(url)")
-          completion(nil)
+        if (retryCount < 3) {
+            print("Retrying call to getRandomIngrediants")
+            var retry = retryCount + 1
+            getRandomIngrediants(completion: { response in
+                 completion(response) }, retry)
+        } else {
+            completion(nil)
+        }
         }
     }
     task.resume()

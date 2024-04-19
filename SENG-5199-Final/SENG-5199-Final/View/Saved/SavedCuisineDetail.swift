@@ -17,6 +17,7 @@ struct SavedCuisineDetail: View {
     @State var showNutritionFacts = false
     
     @Environment(\.modelContext) private var modelContext
+
     @Query private var foodData: [FoodItemData]
 
     var body: some View {
@@ -31,20 +32,6 @@ struct SavedCuisineDetail: View {
                 }
                 .frame(maxWidth: .infinity)
 
-                HStack {
-                    Text(foodItem.title)
-//                    Button("Save") {
-//                        Task {
-//                            saveFood()
-//                        }
-//                    }
-//                    .padding()
-//                    .overlay(
-//                        Capsule()
-//                            .stroke(.gray, lineWidth: 1)
-//                    )
-//                    .padding([.leading, .trailing], 20)
-                }
                 
                 Spacer()
                 HStack(spacing: 30) {
@@ -216,8 +203,7 @@ struct SavedCuisineDetail: View {
         return numResult
     }
     
-//    func saveFood() {
-//        let newFoodData: FoodItemData = foodItem.generateData()
-//        modelContext.insert(newFoodData)
-//    }
+    func deleteFood() {
+        modelContext.delete(foodItem)
+    }
 }

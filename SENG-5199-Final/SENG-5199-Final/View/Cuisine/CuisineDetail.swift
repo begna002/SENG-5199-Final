@@ -30,8 +30,18 @@ struct CusineDetail: View {
                                    scale: 1)
                         .frame(width: 300, height: 250)
                         .cornerRadius(5)
-                        Button("Save Recipe") {
+                        
+                        Button(action: {
                             saveFood()
+                          }) {
+                            Text("Save Recipe")
+                                .font(.subheadline)
+                                .frame(width: 125, height: 25)
+                                .background(Capsule()
+                                    .fill(saveDisabled ? .gray : .white)
+                                    .stroke(.gray, lineWidth: 1))
+                                .padding()
+                                .padding([.leading, .trailing], 20)
                         }
                         .disabled(saveDisabled)
                     }
