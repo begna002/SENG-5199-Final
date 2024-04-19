@@ -13,6 +13,8 @@ struct SearchView: View {
     @State var cuisines: [FoodItem]?
     @State var fetching: Bool = false
     @State var offset: Int = 0
+    
+    @State var error: ErrorType?
 
     var body: some View {
         NavigationStack {
@@ -44,6 +46,10 @@ struct SearchView: View {
                     SearchResults(cuisines: cuisines, isSearch: true, getMore: {
                         fetchMore()
                     })
+                } else if let error {
+                    CuisineError(error: error)
+                    Spacer()
+                    Spacer()
                 }
             }
             .navigationTitle("Search")
@@ -54,12 +60,17 @@ struct SearchView: View {
         if (text != "") {
             cuisines = nil
             fetching = true
+            error = nil
             getIngrediants(offset, text, completion: { response in
+                fetching = false
                 if let response {
                     if (!response.results.isEmpty) {
                         cuisines = response.results
-                        fetching = false
+                    } else {
+                        error = .NoResults
                     }
+                } else {
+                    error = .Exception
                 }
             })
         }
@@ -69,6 +80,7 @@ struct SearchView: View {
         offset += 20
         if (text != "") {
             getIngrediants(offset, text, completion: { response in
+                fetching = false
                 if let response {
                     if (!response.results.isEmpty) {
                         let savedCuisines = cuisines

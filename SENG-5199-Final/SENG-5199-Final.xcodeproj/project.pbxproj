@@ -31,6 +31,7 @@
 		740DDC932BCC9136003D8501 /* CusineTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DDC922BCC9136003D8501 /* CusineTab.swift */; };
 		740DDC952BCC943D003D8501 /* CuisineTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DDC942BCC943D003D8501 /* CuisineTabItem.swift */; };
 		74C21CC72BD1C7670025E368 /* CuisineFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C21CC62BD1C7670025E368 /* CuisineFilter.swift */; };
+		74C21CCA2BD2AA0F0025E368 /* CuisineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C21CC92BD2AA0F0025E368 /* CuisineError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		740DDC922BCC9136003D8501 /* CusineTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusineTab.swift; sourceTree = "<group>"; };
 		740DDC942BCC943D003D8501 /* CuisineTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineTabItem.swift; sourceTree = "<group>"; };
 		74C21CC62BD1C7670025E368 /* CuisineFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineFilter.swift; sourceTree = "<group>"; };
+		74C21CC92BD2AA0F0025E368 /* CuisineError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			children = (
 				740DDBEC2BCABBAF003D8501 /* CusineType.swift */,
 				740DDC6B2BCC7D1B003D8501 /* LoadingIndicatorView.swift */,
+				74C21CC92BD2AA0F0025E368 /* CuisineError.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				740DDBE72BC06F54003D8501 /* CuisineRow.swift in Sources */,
 				740DDBED2BCABBAF003D8501 /* CusineType.swift in Sources */,
 				740DDBCE2BC065D4003D8501 /* ContentView.swift in Sources */,
+				74C21CCA2BD2AA0F0025E368 /* CuisineError.swift in Sources */,
 				740DDBF52BCADB73003D8501 /* SectionHeader.swift in Sources */,
 				740DDBD02BC065D4003D8501 /* Item.swift in Sources */,
 				740DDC932BCC9136003D8501 /* CusineTab.swift in Sources */,

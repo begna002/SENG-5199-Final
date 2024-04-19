@@ -37,6 +37,7 @@ func getIngrediants(_ offset: Int, _ query: String, completion: @escaping (FoodR
             completion(foodResponse)
         } catch {
             print("Error decoding JSON data: \(error), url: \(url)")
+            completion(nil)
         }
     }
     task.resume()
@@ -69,6 +70,7 @@ func getIngrediantsByCusine(number: Int = 10, _ cuisine: String, completion: @es
             completion(foodResponse)
         } catch {
             print("Error decoding JSON data: \(error), url: \(url)")
+            completion(nil)
         }
     }
     task.resume()
@@ -97,6 +99,7 @@ func getRandomIngrediants(completion: @escaping (FoodResponse?) -> Void){
             completion(foodResponse)
         } catch {
           print("Error decoding JSON data: \(error), url: \(url)")
+          completion(nil)
         }
     }
     task.resume()
