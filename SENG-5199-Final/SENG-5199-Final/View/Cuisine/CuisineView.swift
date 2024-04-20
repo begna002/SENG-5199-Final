@@ -11,7 +11,7 @@ import SwiftUI
 struct CusineView: View {
     @State var cuisines: Dictionary<String, [FoodItem]> = [:]
     @State var cuisineTabResults: [FoodItem] = []
-    @StateObject var filter = Filter.shared
+    @StateObject var filter = ViewModel.shared
 
     var body: some View {
         VStack {

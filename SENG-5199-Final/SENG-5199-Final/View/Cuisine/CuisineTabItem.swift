@@ -17,7 +17,13 @@ struct CuisineTabItem: View {
     var body: some View {
         ZStack(alignment: .center) {
             AsyncImage(url: URL(string: foodItem.image),
-                       scale: scale)
+                       scale: scale) {phase in
+                    if let image = phase.image {
+                        image
+                    } else{
+                        
+                    }
+                }
                 .scaledToFill()
                 .frame(height: 200)
                 .clipped()
@@ -25,6 +31,7 @@ struct CuisineTabItem: View {
                 .background(Color.clear)
             Text(foodItem.title)
                 .font(.subheadline)
+                .foregroundStyle(.black)
                 .frame(width: 200, height: 25)
                 .background(Rectangle().fill(.white).stroke(.gray, lineWidth: 1))
                 .offset(y: -75)

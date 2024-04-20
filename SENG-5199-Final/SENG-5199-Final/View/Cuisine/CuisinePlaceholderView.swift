@@ -17,7 +17,6 @@ struct CusinePlaceholderView: View {
                 .frame(height: 200)
                 .cornerRadius(5)
         }
-//        .frame(height: 200)
         .listRowBackground(Color.clear)
       ForEach (0..<5) { _ in
         HStack {

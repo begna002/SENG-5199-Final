@@ -8,17 +8,8 @@
 import Foundation
 import SwiftUI
 
-class Filter: ObservableObject {
-    static let shared = Filter()
-
-    @Published var selectedCusine: String = ""
-    @Published var cuisinesFilter: Dictionary<String, [FoodItem]> = [:]
-    @Published var fetching: Bool = false
-
-}
-
 struct CuisineFilter: View {
-    @StateObject var filter = Filter.shared
+    @StateObject var filter = ViewModel.shared
 
     var body: some View {
         VStack {

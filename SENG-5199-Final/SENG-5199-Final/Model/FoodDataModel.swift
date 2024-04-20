@@ -25,6 +25,7 @@ final class FoodItemData: Identifiable  {
         self.preparationMinutes = preparationMinutes
         self.cookingMinutes = cookingMinutes
         self.servings = servings
+        self.images = []
     }
     
     var id: Int
@@ -41,9 +42,21 @@ final class FoodItemData: Identifiable  {
     var preparationMinutes: Int
     var cookingMinutes: Int
     var servings: Int
+    var images: [ImageData]
     
     func hasNoDiet() -> Bool {
         return !(self.vegetarian || self.vegan || self.glutenFree || self.dairyFree)
+    }
+}
+
+@Model
+final class ImageData: Identifiable {
+    var id = UUID()
+    var date: Date = Date()
+    var image: Data
+    
+    internal init(_ image: Data) {
+        self.image = image
     }
 }
 

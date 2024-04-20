@@ -8,11 +8,9 @@
 import Foundation
 import SwiftUI
 
-enum ErrorType: String, CaseIterable, Identifiable {
+enum ErrorType: String {
     case Exception = "Error returned when fetching results"
     case NoResults = "No Results Found"
-    
-    var id: String { self.rawValue }
 }
 
 

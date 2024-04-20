@@ -16,6 +16,7 @@ struct CusineDetail: View {
     @State var showDiet = true
     @State var showNutritionFacts = false
     @State var saveDisabled = false
+    @State var showSaveAlert = false
 
     @Environment(\.modelContext) private var modelContext
     @Query private var cuisines: [FoodItemData]
@@ -27,12 +28,18 @@ struct CusineDetail: View {
                     VStack(alignment: .center) {
                         Text(foodItem.title)
                         AsyncImage(url: URL(string: foodItem.image),
-                                   scale: 1)
+                                   scale: 1) {phase in
+                                if let image = phase.image {
+                                    image
+                                } else{
+                                   
+                                }
+                            }
                         .frame(width: 300, height: 250)
                         .cornerRadius(5)
                         
                         Button(action: {
-                            saveFood()
+                            showSaveAlert = true
                           }) {
                             Text("Save Recipe")
                                 .font(.subheadline)
@@ -93,6 +100,11 @@ struct CusineDetail: View {
                     if showNutritionFacts {
                         let nutrients = foodItem.nutrition.nutrients
                         let nutrientSize: Int = nutrients.count
+                        
+                        let products = getNutritionProducts(nutrients)
+                        HStack {
+                            NutritionChart(products: products)
+                        }
                         
                         ForEach(0..<nutrientSize) { index in
                             let nutrient = nutrients[index]
@@ -197,6 +209,17 @@ struct CusineDetail: View {
                 saveDisabled = true
             }
         }
+        .alert(isPresented: $showSaveAlert) {
+            Alert(title: Text("Save recipe?"),
+                  primaryButton: Alert.Button.default(Text("Save"), action: {
+                    showSaveAlert = false
+                    saveFood()
+                  }),
+                  secondaryButton: Alert.Button.cancel(Text("Cancel"), action: {
+                    showSaveAlert = false
+                  })
+            )
+        }
     }
     
     func round(_ num: Float, _ places: Int) -> String {
@@ -241,5 +264,32 @@ struct CusineDetail: View {
         let newFoodData: FoodItemData = foodItem.generateData()
         modelContext.insert(newFoodData)
         saveDisabled = true
+    }
+    
+    func getNutritionProducts(_ nutrients: [NutrientInfo]) -> [Product] {
+        var nutritionList: [Product] = []
+        
+        var proteinAmount: Double = 0.0
+        var fatAmount: Double = 0.0
+        var carbAmount: Double = 0.0
+
+        for nutrient in nutrients {
+            if (nutrient.name == "Protein") {
+                proteinAmount = Double(nutrient.amount * 4)
+            }
+            if (nutrient.name == "Fat") {
+                fatAmount = Double(nutrient.amount * 9)
+            }
+            if (nutrient.name == "Carbohydrates") {
+                carbAmount = Double(nutrient.amount * 4)
+            }
+        }
+        
+        let totalAmmount = proteinAmount + fatAmount + carbAmount
+        nutritionList.append(Product(title: "Protein", amount: proteinAmount/totalAmmount))
+        nutritionList.append(Product(title: "Fat", amount: fatAmount/totalAmmount))
+        nutritionList.append(Product(title: "Carbohydrates", amount: carbAmount/totalAmmount))
+        
+        return nutritionList
     }
 }

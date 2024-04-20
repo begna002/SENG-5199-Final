@@ -20,10 +20,9 @@ struct SearchView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 HStack {
-                    TextField("Enter", text: $text) {
-                        
-                    }
+                    TextField("Enter", text: $text) 
                         .padding()
+                        .padding([.trailing], 40)
                         .overlay(
                             ZStack {
                                 Capsule()
@@ -34,7 +33,7 @@ struct SearchView: View {
                                         text = ""
                                       }) {
                                           Image(systemName: "xmark.circle")
-                                                                .frame(width: 30, height: 30)
+                                                                .frame(width: 40, height: 40)
                                     }
                                       .padding(.trailing, 10)
                                       .opacity(text.isEmpty ? 0 : 1)

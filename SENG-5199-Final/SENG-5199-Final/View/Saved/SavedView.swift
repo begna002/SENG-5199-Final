@@ -12,7 +12,7 @@ import SwiftData
 struct SavedView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var cuisines: [FoodItemData]
-
+    @State var showDeleteAlert: Bool = false
     let columns = [
         GridItem(.adaptive(minimum: 150))
     ]
@@ -21,7 +21,7 @@ struct SavedView: View {
         NavigationStack {
             ScrollView {
                 Button(action: {
-                    deleteAll()
+                    showDeleteAlert = true
                   }) {
                     Text("Delete All")
                         .font(.subheadline)
@@ -49,6 +49,17 @@ struct SavedView: View {
                 .padding(.horizontal)
             } 
             .navigationTitle("Saved")
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(title: Text("Delete all?"),
+                      primaryButton: Alert.Button.default(Text("Delete"), action: {
+                        showDeleteAlert = false
+                        deleteAll()
+                      }),
+                      secondaryButton: Alert.Button.cancel(Text("Cancel"), action: {
+                        showDeleteAlert = false
+                      })
+                )
+            }
         }
     }
     

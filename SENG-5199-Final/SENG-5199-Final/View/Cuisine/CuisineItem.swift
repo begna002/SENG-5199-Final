@@ -17,13 +17,20 @@ struct CuisineItem: View {
     var body: some View {
         VStack(alignment: .leading) {
             AsyncImage(url: URL(string: foodItem.image),
-                              scale: scale)
+                              scale: scale){ phase in
+                    if let image = phase.image {
+                        image
+                    } else{
+                        
+                    }
+                }
                 .frame(width: width, height: height)
                 .cornerRadius(5)
             Text(foodItem.title)
                 .frame(width: 140)
                     .truncationMode(.tail)
                 .font(.caption)
+                .foregroundStyle(.white)
         }
         .padding(.leading, 15)
     }

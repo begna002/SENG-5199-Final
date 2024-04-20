@@ -34,8 +34,9 @@ struct ContentView: View {
                 .tabItem {
                     Label("Saved", systemImage: "checklist.checked.rtl")
                 }
-                .tag(Tab.search)
+                .tag(Tab.saved)
         }
+        .preferredColorScheme(.dark)
     }
 
 }

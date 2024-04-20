@@ -31,7 +31,7 @@ struct SectionHeader: View {
           .foregroundColor(.accentColor)
           .frame(maxWidth: .infinity, alignment: .trailing)
           .overlay(
-            Text(title),
+            Text(title).foregroundStyle(.white).bold(),
             alignment: .leading
           )
       }

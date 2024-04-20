@@ -15,7 +15,9 @@ struct SavedCuisineDetail: View {
     @State var showInstrucions = false
     @State var showDiet = true
     @State var showNutritionFacts = false
-    
+    @State var showGallery = true
+    @StateObject var viewModel = ViewModel.shared
+
     @Environment(\.modelContext) private var modelContext
 
     @Query private var foodData: [FoodItemData]
@@ -26,7 +28,13 @@ struct SavedCuisineDetail: View {
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(foodItem.title)
                     AsyncImage(url: URL(string: foodItem.image),
-                               scale: 1)
+                               scale: 1) {phase in
+                            if let image = phase.image {
+                                image
+                            } else{
+                                
+                            }
+                        }
                     .frame(width: 300, height: 250)
                     .cornerRadius(5)
                 }
@@ -78,6 +86,11 @@ struct SavedCuisineDetail: View {
                 if showNutritionFacts {
                     let nutrients = foodItem.nutrition.nutrients
                     let nutrientSize: Int = nutrients.count
+                    
+                    let products = getNutritionProducts(nutrients)
+                    HStack {
+                        NutritionChart(products: products)
+                    }
                     
                     ForEach(0..<nutrientSize) { index in
                         let nutrient = nutrients[index]
@@ -175,6 +188,19 @@ struct SavedCuisineDetail: View {
                     }
                 }
             }
+            
+            Section(
+                header: SectionHeader(
+                    title: "Gallery",
+                    isOn: $showGallery
+                )
+            ) {
+                if showGallery {
+                    PhotoView(foodItem: foodItem)
+                        .listRowBackground(Color.clear)
+                }
+            }
+            
         }.listSectionSpacing(0.5)
     }
     
@@ -205,5 +231,32 @@ struct SavedCuisineDetail: View {
     
     func deleteFood() {
         modelContext.delete(foodItem)
+    }
+    
+    func getNutritionProducts(_ nutrients: [NutrientInfoData]) -> [Product] {
+        var nutritionList: [Product] = []
+        
+        var proteinAmount: Double = 0.0
+        var fatAmount: Double = 0.0
+        var carbAmount: Double = 0.0
+
+        for nutrient in nutrients {
+            if (nutrient.name == "Protein") {
+                proteinAmount = Double(nutrient.amount * 4)
+            }
+            if (nutrient.name == "Fat") {
+                fatAmount = Double(nutrient.amount * 9)
+            }
+            if (nutrient.name == "Carbohydrates") {
+                carbAmount = Double(nutrient.amount * 4)
+            }
+        }
+        
+        let totalAmmount = proteinAmount + fatAmount + carbAmount
+        nutritionList.append(Product(title: "Protein", amount: proteinAmount/totalAmmount))
+        nutritionList.append(Product(title: "Fat", amount: fatAmount/totalAmmount))
+        nutritionList.append(Product(title: "Carbohydrates", amount: carbAmount/totalAmmount))
+        
+        return nutritionList
     }
 }
