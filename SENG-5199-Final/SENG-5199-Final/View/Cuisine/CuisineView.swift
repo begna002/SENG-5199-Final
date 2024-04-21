@@ -11,7 +11,7 @@ import SwiftUI
 struct CusineView: View {
     @State var cuisines: Dictionary<String, [FoodItem]> = [:]
     @State var cuisineTabResults: [FoodItem] = []
-    @StateObject var filter = FilterViewModel.shared
+    @StateObject var filter = ViewModel.shared
 
     var body: some View {
         VStack {
@@ -40,7 +40,7 @@ struct CusineView: View {
                             } else {
                                 let foodResponse = filter.cuisinesFilter[filter.selectedCusine]
                                 if let foodResponse {
-                                    SearchResults(cuisines: foodResponse, size: 150, spacing: 40, isSearch: false, getMore: {})
+                                    SearchResults(cuisines: foodResponse, size: 150, spacing: 40, isSearch: false, getMore: {}, isScrollDisabled: true)
                                         .listRowBackground(Color.clear)
                                 }
                             }
@@ -51,6 +51,8 @@ struct CusineView: View {
                                     CuisineRow(cusineName: key.Name, foodList: foodResponse)
                                 }
                             }
+                            .padding(.top, 20)
+                            .padding(.bottom, 10)
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                         }

@@ -10,19 +10,23 @@ import SwiftUI
 import SwiftData
 
 struct SavedCuisineDetail: View {
-    var foodItem: FoodItemData
     @State var showIngrediants = true
     @State var showInstrucions = false
     @State var showDiet = true
     @State var showNutritionFacts = false
     @State var showGallery = true
     @State var showDeleteAlert = false
-    var completion: (FoodItemData) -> Void
+    
+    @StateObject var filter = ViewModel.shared
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
 
     @Query private var foodData: [FoodItemData]
+    
+    var foodItem: FoodItemData
+    var completion: (FoodItemData) -> Void
+
     
     var body: some View {
         List {
@@ -222,19 +226,23 @@ struct SavedCuisineDetail: View {
                 }
             }
             
-        }.listSectionSpacing(0.5)
-            .alert(isPresented: $showDeleteAlert) {
-                Alert(title: Text("Delete?"),
-                      primaryButton: Alert.Button.default(Text("Delete"), action: {
-                        showDeleteAlert = false
-                        self.presentationMode.wrappedValue.dismiss()
-                        completion(foodItem)
-                      }),
-                      secondaryButton: Alert.Button.cancel(Text("Cancel"), action: {
-                        showDeleteAlert = false
-                      })
-                )
-            }
+        }
+        .listSectionSpacing(0.5)
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(title: Text("Delete?"),
+                  primaryButton: Alert.Button.default(Text("Delete"), action: {
+                    showDeleteAlert = false
+                    self.presentationMode.wrappedValue.dismiss()
+                    completion(foodItem)
+                  }),
+                  secondaryButton: Alert.Button.cancel(Text("Cancel"), action: {
+                    showDeleteAlert = false
+                  })
+            )
+        }
+        .onChange(of: filter.navToHome) {
+            self.presentationMode.wrappedValue.dismiss()
+        }
     }
     
     func round(_ num: Float, _ places: Int) -> String {

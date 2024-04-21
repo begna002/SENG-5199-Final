@@ -9,15 +9,29 @@ import Foundation
 import SwiftUI
 
 struct CuisineRow: View {
+    @StateObject var filter = ViewModel.shared
     var cusineName: String
     var foodList: [FoodItem]
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(cusineName)
-                .font(.headline)
-                .padding(.leading, 15)
-                .padding(.top, 5)
+            HStack {
+                Text(cusineName)
+                    .font(.headline)
+                    .padding(.leading, 15)
+                    .padding(.top, 5)
+                
+                Spacer()
+                Button(action: {
+                    filterCuisine(cusineName)
+                }) {
+                    HStack {
+                        Text("More")
+                        Image(systemName: "arrowshape.right.circle").foregroundColor(.blue)
+                    }
+
+                }
+            }
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 0) {
@@ -31,6 +45,33 @@ struct CuisineRow: View {
                 }
             }
             .frame(height: 185)
+        }
+    }
+    
+    func filterCuisine(_ cuisine: String) {
+        if (filter.selectedCusine == cuisine) {
+            filter.selectedCusine = ""
+        } else {
+            filter.selectedCusine = cuisine
+            fetchCuisine(cuisine)
+        }
+    }
+    
+    func fetchCuisine(_ cuisine: String) {
+        guard filter.cuisinesFilter[cuisine] != nil else {
+            filter.fetching = true
+            filter.filterIndex = AllCusineType(rawValue: cuisine)!
+            getIngrediantsByCusine(number: 20, cuisine, completion: { response in
+                if let response {
+                    if (!response.results.isEmpty) {
+                        DispatchQueue.main.sync {
+                            filter.cuisinesFilter[cuisine] = response.results
+                            filter.fetching = false
+                        }
+                    }
+                }
+            })
+            return
         }
     }
 }

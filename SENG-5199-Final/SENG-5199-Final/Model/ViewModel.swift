@@ -7,10 +7,15 @@
 
 import Foundation
 
-class FilterViewModel: ObservableObject {
-    static let shared = FilterViewModel()
+@MainActor class ViewModel: ObservableObject {
+    static let shared = ViewModel()
 
     @Published var selectedCusine: String = ""
     @Published var cuisinesFilter: Dictionary<String, [FoodItem]> = [:]
     @Published var fetching: Bool = false
+    @Published var filterIndex: AllCusineType = .African
+    
+    @Published var navToHome: Bool = false
+    @Published var tabSelection: Tab = .explore
+
 }

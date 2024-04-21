@@ -18,7 +18,10 @@ struct CusineDetail: View {
     @State var saveDisabled = false
     @State var showSaveAlert = false
 
+    @StateObject var filter = ViewModel.shared
+
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.presentationMode) var presentationMode
     @Query private var cuisines: [FoodItemData]
 
     var body: some View {
@@ -219,6 +222,9 @@ struct CusineDetail: View {
                     showSaveAlert = false
                   })
             )
+        }
+        .onChange(of: filter.navToHome) {
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
     

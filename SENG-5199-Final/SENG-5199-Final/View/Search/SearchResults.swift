@@ -14,6 +14,7 @@ struct SearchResults: View {
     var spacing: CGFloat = 20
     var isSearch: Bool
     var getMore: () -> Void
+    var isScrollDisabled: Bool = false
 
     var body: some View {
         let columns = [
@@ -46,5 +47,6 @@ struct SearchResults: View {
                 .padding([.leading, .trailing, .top], 20)
             }
         }
+        .scrollDisabled(isScrollDisabled)
     }
 }

@@ -45,5 +45,34 @@ enum AllCusineType: String, CaseIterable, Identifiable {
     case Mediterranean = "Mediterranean"
     case Mexican = "Mexican"
     
+    func getIndex(cuisne: String) -> Int {
+        switch(cuisne) {
+        case "African":
+            return 0
+        case "American":
+            return 1
+        case "Asian":
+            return 2
+        case "Chinese":
+            return 3
+        case "French":
+            return 4
+        case "Greek":
+            return 5
+        case "Indian":
+            return 6
+        case "Italian":
+            return 7
+        case "Japanese":
+            return 8
+        case "Mediterranean":
+            return 9
+        case "Mexican":
+            return 10
+        default:
+            return 0
+        }
+    }
+    
     var id: String { self.rawValue }
 }

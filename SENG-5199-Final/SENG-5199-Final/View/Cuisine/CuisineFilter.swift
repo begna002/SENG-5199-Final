@@ -9,25 +9,32 @@ import Foundation
 import SwiftUI
 
 struct CuisineFilter: View {
-    @StateObject var filter = FilterViewModel.shared
+    @StateObject var filter = ViewModel.shared
 
     var body: some View {
         VStack {
-            Text("Filter")
-                .font(.subheadline)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: 12) {
-                    ForEach(AllCusineType.allCases) { cuisine in
-                        Button(action: {
-                            filterCuisine(cuisine.rawValue)
-                          }) {
-                            Text(cuisine.rawValue)
-                                .font(.subheadline)
-                                .frame(width: 125, height: 25)
-                                .background(Capsule()
-                                    .fill(filter.selectedCusine == cuisine.rawValue ? .gray : .white)
-                                    .stroke(.gray, lineWidth: 1))
+//            Text("Filter")
+//                .font(.subheadline)
+            ScrollViewReader { value in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 12) {
+                        ForEach(AllCusineType.allCases, id: \.id) { cuisine in
+                            Button(action: {
+                                filterCuisine(cuisine.rawValue)
+                            }) {
+                                Text(cuisine.rawValue)
+                                    .font(.subheadline)
+                                    .frame(width: 125, height: 25)
+                                    .background(Capsule()
+                                        .fill(filter.selectedCusine == cuisine.rawValue ? .gray : .white)
+                                        .stroke(.gray, lineWidth: 1))
+                            }
+                            .id(cuisine)
+                        }
+                    }
+                    .onChange(of: filter.filterIndex) {
+                        withAnimation {
+                            value.scrollTo(filter.filterIndex, anchor: .center)
                         }
                     }
                 }
@@ -48,13 +55,16 @@ struct CuisineFilter: View {
     }
     
     func fetchCuisine(_ cuisine: String) {
-        guard let cuisineList = filter.cuisinesFilter[cuisine] else {
+        guard filter.cuisinesFilter[cuisine] != nil else {
             filter.fetching = true
             getIngrediantsByCusine(number: 20, cuisine, completion: { response in
                 if let response {
                     if (!response.results.isEmpty) {
-                        filter.cuisinesFilter[cuisine] = response.results
-                        filter.fetching = false
+                        DispatchQueue.main.sync {
+                            filter.cuisinesFilter[cuisine] = response.results
+                            filter.fetching = false
+                        }
+                        
                     }
                 }
             })
