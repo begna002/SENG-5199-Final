@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct SearchView: View {
     @State var text: String = ""
@@ -14,8 +15,10 @@ struct SearchView: View {
     @State var fetching: Bool = false
     @State var offset: Int = 0
     @State var moreDisabled: Bool = false
-    
     @State var error: ErrorType?
+    
+    @Environment(\.modelContext) private var modelContext
+    @Query private var recentSearches: [RecentSearch]
 
     var body: some View {
         NavigationStack {
@@ -32,6 +35,7 @@ struct SearchView: View {
                                     Spacer()
                                     Button(action: {
                                         text = ""
+                                        cuisines = nil
                                       }) {
                                           Image(systemName: "xmark.circle")
                                                                 .frame(width: 40, height: 40)
@@ -67,6 +71,11 @@ struct SearchView: View {
                     CuisineError(error: error)
                     Spacer()
                     Spacer()
+                } else if !fetching {
+                    RecentSearchView(doSearch: { term in
+                        text = term
+                        submitSearch()
+                    })
                 }
             }
             .navigationTitle("Search")
@@ -83,6 +92,7 @@ struct SearchView: View {
                 fetching = false
                 if let response {
                     if (!response.results.isEmpty) {
+                        addRecentSearch(text)
                         if (response.results.count < 20) {
                             moreDisabled = true
                         }
@@ -119,5 +129,16 @@ struct SearchView: View {
                 }
             })
         }
+    }
+    
+    func addRecentSearch(_ termToSave: String) {
+        for term in recentSearches {
+            if (term.term == termToSave) {
+                return
+            }
+        }
+        
+        let newTerm: RecentSearch = RecentSearch(termToSave)
+        modelContext.insert(newTerm)
     }
 }
