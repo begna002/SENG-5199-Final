@@ -80,6 +80,7 @@ struct CusineDetail: View {
                             let calorieInfo = foodItem.nutrition.nutrients[0]
                             Text("Calories").bold()
                             HStack {
+                                Image(systemName: "flame")
                                 Text("\(Int(calorieInfo.amount)) \(calorieInfo.unit)")
                             }
                         }.font(Font.caption)
@@ -199,7 +200,7 @@ struct CusineDetail: View {
                         ForEach(0..<numSteps) { index in
                             let instructionStep = instructions[index]
                             HStack {
-                                Text("\(instructionStep.number)")
+                                Text("\(instructionStep.number)").padding(.trailing, 10)
                                 Text(instructionStep.step)
                             }
                         }

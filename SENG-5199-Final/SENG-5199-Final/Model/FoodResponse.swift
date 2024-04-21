@@ -34,8 +34,10 @@ struct FoodItem: Codable, Identifiable  {
     func generateData() -> FoodItemData {
         //Generate NutrientInfoData
         var nutrients: [NutrientInfoData] = []
+        var index = 0
         for nutrient in self.nutrition.nutrients {
-            nutrients.append(NutrientInfoData(nutrient.name, nutrient.amount, nutrient.unit, nutrient.percentOfDailyNeeds))
+            nutrients.append(NutrientInfoData(nutrient.name, nutrient.amount, nutrient.unit, nutrient.percentOfDailyNeeds, index))
+            index += 1
         }
         let nutrition = RecipeNutritionData(nutrients)
         

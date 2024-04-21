@@ -40,7 +40,7 @@ struct CusineView: View {
                             } else {
                                 let foodResponse = filter.cuisinesFilter[filter.selectedCusine]
                                 if let foodResponse {
-                                    SearchResults(cuisines: foodResponse, size: 150, spacing: 40, isSearch: false, getMore: {}, isScrollDisabled: true)
+                                    SearchResults(cuisines: foodResponse, size: 150, spacing: 40, isSearch: false, getMore: {}, isScrollDisabled: true, moreDisabled: false)
                                         .listRowBackground(Color.clear)
                                 }
                             }

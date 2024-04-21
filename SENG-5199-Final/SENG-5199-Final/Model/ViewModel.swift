@@ -13,7 +13,7 @@ import Foundation
     @Published var selectedCusine: String = ""
     @Published var cuisinesFilter: Dictionary<String, [FoodItem]> = [:]
     @Published var fetching: Bool = false
-    @Published var filterIndex: AllCusineType = .African
+    @Published var filterIndex: AllCusineType? = .African
     
     @Published var navToHome: Bool = false
     @Published var tabSelection: Tab = .explore

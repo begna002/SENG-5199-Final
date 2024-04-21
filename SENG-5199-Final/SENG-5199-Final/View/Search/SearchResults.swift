@@ -16,6 +16,8 @@ struct SearchResults: View {
     var getMore: () -> Void
     var isScrollDisabled: Bool = false
 
+    @State var moreDisabled: Bool
+
     var body: some View {
         let columns = [
             GridItem(.adaptive(minimum: size))
@@ -35,7 +37,7 @@ struct SearchResults: View {
             }
             .padding(.horizontal)
             
-            if (isSearch) {
+            if (isSearch && !moreDisabled) {
                 Button("More") {
                     getMore()
                 }

@@ -89,7 +89,7 @@ final class RecipeInstructionsData {
 }
 
 @Model
-final class RecipeStepData {
+final class RecipeStepData: Identifiable {
     internal init(_ number: Int, _ step: String) {
         self.number = number
         self.step = step
@@ -97,6 +97,7 @@ final class RecipeStepData {
     
     var number: Int
     var step: String
+    var id = UUID()
 }
 
 @Model
@@ -109,12 +110,13 @@ final class RecipeNutritionData {
 }
 
 @Model
-final class NutrientInfoData {
-    internal init(_ name: String, _ amount: Float, _ unit: String, _ percentOfDailyNeeds: Float) {
+final class NutrientInfoData: Identifiable {
+    internal init(_ name: String, _ amount: Float, _ unit: String, _ percentOfDailyNeeds: Float, _ number: Int) {
         self.name = name
         self.amount = amount
         self.unit = unit
         self.percentOfDailyNeeds = percentOfDailyNeeds
+        self.number = number
     }
     
 
@@ -122,4 +124,6 @@ final class NutrientInfoData {
     var amount: Float
     var unit: String
     var percentOfDailyNeeds: Float
+    var id = UUID()
+    var number: Int
 }

@@ -22,15 +22,12 @@ struct CuisineRow: View {
                     .padding(.top, 5)
                 
                 Spacer()
-                Button(action: {
-                    filterCuisine(cusineName)
-                }) {
-                    HStack {
-                        Text("More")
-                        Image(systemName: "arrowshape.right.circle").foregroundColor(.blue)
-                    }
 
-                }
+                    HStack {
+                        Text("More").foregroundColor(.blue)
+                        Image(systemName: "arrowshape.right.circle").foregroundColor(.blue)
+                    }.onTapGesture { filterCuisine(cusineName) }
+
             }
 
             ScrollView(.horizontal, showsIndicators: false) {
@@ -61,7 +58,7 @@ struct CuisineRow: View {
         guard filter.cuisinesFilter[cuisine] != nil else {
             filter.fetching = true
             filter.filterIndex = AllCusineType(rawValue: cuisine)!
-            getIngrediantsByCusine(number: 20, cuisine, completion: { response in
+            getIngrediantsByCusine(number: 30, cuisine, completion: { response in
                 if let response {
                     if (!response.results.isEmpty) {
                         DispatchQueue.main.sync {
@@ -73,5 +70,6 @@ struct CuisineRow: View {
             })
             return
         }
+        filter.filterIndex = AllCusineType(rawValue: cuisine)!
     }
 }

@@ -9,12 +9,14 @@ import Foundation
 import SwiftUI
 import PhotosUI
 
+// Access and open camera
 struct accessCameraView: UIViewControllerRepresentable {
 
     var foodItem: FoodItemData
     @Binding var selectedImages: [ImageData]?
 
     @Environment(\.presentationMode) var isPresented
+    
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
@@ -33,7 +35,7 @@ struct accessCameraView: UIViewControllerRepresentable {
     }
 }
 
-// Coordinator will help to preview the selected image in the View.
+// Preview the image
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     var picker: accessCameraView
 
@@ -49,7 +51,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
 
         let selectedImages = self.picker.selectedImages
         self.picker.selectedImages = nil
-        if var selectedImages {
+        if let selectedImages {
             let newList = selectedImages + [imageDataClass]
             self.picker.selectedImages = newList
         } else {
@@ -57,7 +59,6 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         }
         
         self.picker.foodItem.images.append(imageDataClass)
-        
         self.picker.isPresented.wrappedValue.dismiss()
     }
 }

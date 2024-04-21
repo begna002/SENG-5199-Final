@@ -35,6 +35,7 @@ struct CuisineFilter: View {
                     .onChange(of: filter.filterIndex) {
                         withAnimation {
                             value.scrollTo(filter.filterIndex, anchor: .center)
+                            filter.filterIndex = nil
                         }
                     }
                 }
@@ -57,7 +58,7 @@ struct CuisineFilter: View {
     func fetchCuisine(_ cuisine: String) {
         guard filter.cuisinesFilter[cuisine] != nil else {
             filter.fetching = true
-            getIngrediantsByCusine(number: 20, cuisine, completion: { response in
+            getIngrediantsByCusine(number: 30, cuisine, completion: { response in
                 if let response {
                     if (!response.results.isEmpty) {
                         DispatchQueue.main.sync {

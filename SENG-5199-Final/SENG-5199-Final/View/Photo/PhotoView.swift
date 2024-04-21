@@ -43,20 +43,24 @@ struct PhotoView: View {
            }
         
             HStack {
-                Button(action:{
-                    self.showCamera.toggle()
-                }) {
+                HStack {
+                    Image(systemName: "camera").foregroundColor(.blue)
+                        .padding([.leading], 20)
+                        .padding([.trailing], 5)
                     Text("Take Photo")
                         .font(.subheadline)
-                        .frame(width: 125, height: 25)
-                        .background(Capsule()
-                            .fill(.white)
-                            .stroke(.gray, lineWidth: 1))
+                        .foregroundColor(.blue)
+                        .frame(height: 25)
+                        .padding(.trailing, 20)
                 }
-                .fullScreenCover(isPresented: self.$showCamera) {
-                    accessCameraView(foodItem: self.foodItem, selectedImages: self.$selectedImages)
-
-                }
+                    .background(Capsule()
+                        .fill(.white)
+                        .stroke(.gray, lineWidth: 1))
+                    .onTapGesture {
+                        self.showCamera.toggle()
+                    }
+            }.fullScreenCover(isPresented: self.$showCamera) {
+                accessCameraView(foodItem: self.foodItem, selectedImages: self.$selectedImages)
             }
         }
         .task {

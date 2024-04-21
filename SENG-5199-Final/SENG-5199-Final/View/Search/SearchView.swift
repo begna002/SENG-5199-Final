@@ -13,6 +13,7 @@ struct SearchView: View {
     @State var cuisines: [FoodItem]?
     @State var fetching: Bool = false
     @State var offset: Int = 0
+    @State var moreDisabled: Bool = false
     
     @State var error: ErrorType?
 
@@ -61,7 +62,7 @@ struct SearchView: View {
                 if let cuisines {
                     SearchResults(cuisines: cuisines, isSearch: true, getMore: {
                         fetchMore()
-                    })
+                    }, moreDisabled: moreDisabled)
                 } else if let error {
                     CuisineError(error: error)
                     Spacer()
@@ -77,10 +78,14 @@ struct SearchView: View {
             cuisines = nil
             fetching = true
             error = nil
+            moreDisabled = false
             getIngrediants(offset, text, completion: { response in
                 fetching = false
                 if let response {
                     if (!response.results.isEmpty) {
+                        if (response.results.count < 20) {
+                            moreDisabled = true
+                        }
                         cuisines = response.results
                     } else {
                         error = .NoResults
@@ -99,6 +104,9 @@ struct SearchView: View {
                 fetching = false
                 if let response {
                     if (!response.results.isEmpty) {
+                        if (response.results.count < 20) {
+                            moreDisabled = true
+                        }
                         let savedCuisines = cuisines
                         cuisines = nil
                         if var savedCuisines {

@@ -16,6 +16,7 @@ struct SavedCuisineDetail: View {
     @State var showNutritionFacts = false
     @State var showGallery = true
     @State var showDeleteAlert = false
+    @State var calorieAmount: Float = 0.0
     
     @StateObject var filter = ViewModel.shared
 
@@ -79,11 +80,11 @@ struct SavedCuisineDetail: View {
                     }.font(Font.caption)
                     
                     VStack(alignment: .center) {
-                        if let food = foodItem.nutrition {
-                            let calorieInfo = food.nutrients[0]
+                        if foodItem.nutrition != nil {
                             Text("Calories").bold()
                             HStack {
-                                Text("\(Int(calorieInfo.amount)) \(calorieInfo.unit)")
+                                Image(systemName: "flame")
+                                Text("\(Int(calorieAmount)) kcal")
                             }
                         }
                         
@@ -107,16 +108,17 @@ struct SavedCuisineDetail: View {
             ){
                 if showNutritionFacts {
                     if let nutrition = foodItem.nutrition{
-                        let nutrients = nutrition.nutrients
-                        let nutrientSize: Int = nutrients.count
-                        
+                        var nutrients = nutrition.nutrients
                         let products = getNutritionProducts(nutrients)
+                        let _ = nutrients.sort {
+                            $0.number < $1.number
+                        }
+                        
                         HStack {
                             NutritionChart(products: products)
                         }
                         
-                        ForEach(0..<nutrientSize) { index in
-                            let nutrient = nutrients[index]
+                        ForEach(nutrients) { nutrient in
                             let nutrientAmountRounded = round(nutrient.amount, 3)
                             
                             HStack {
@@ -201,11 +203,13 @@ struct SavedCuisineDetail: View {
                 )
             ) {
                 if showInstrucions {
-                    let instructions = foodItem.analyzedInstructions[0].steps
-                    let numSteps: Int = instructions.count
+                    var instructions = foodItem.analyzedInstructions[0].steps
                     
-                    ForEach(0..<numSteps) { index in
-                        let instructionStep = instructions[index]
+                    let _ = instructions.sort {
+                        $0.number < $1.number
+                    }
+                    
+                    ForEach(instructions) { instructionStep in
                         HStack {
                             Text("\(instructionStep.number)")
                             Text(instructionStep.step)
@@ -242,6 +246,15 @@ struct SavedCuisineDetail: View {
         }
         .onChange(of: filter.navToHome) {
             self.presentationMode.wrappedValue.dismiss()
+        }
+        .task {
+            if let nutrition = foodItem.nutrition{
+                for nutrient in nutrition.nutrients {
+                    if (nutrient.name == "Calories") {
+                        calorieAmount = nutrient.amount
+                    }
+                }
+            }
         }
     }
     
