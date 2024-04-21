@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CuisineFilter: View {
-    @StateObject var filter = ViewModel.shared
+    @StateObject var filter = FilterViewModel.shared
 
     var body: some View {
         VStack {

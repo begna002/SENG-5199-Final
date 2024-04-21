@@ -16,12 +16,14 @@ struct SavedCuisineDetail: View {
     @State var showDiet = true
     @State var showNutritionFacts = false
     @State var showGallery = true
-    @StateObject var viewModel = ViewModel.shared
+    @State var showDeleteAlert = false
+    var completion: (FoodItemData) -> Void
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.presentationMode) var presentationMode
 
     @Query private var foodData: [FoodItemData]
-
+    
     var body: some View {
         List {
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
@@ -37,6 +39,19 @@ struct SavedCuisineDetail: View {
                         }
                     .frame(width: 300, height: 250)
                     .cornerRadius(5)
+                    
+                    Button(action: {
+                        showDeleteAlert = true
+                      }) {
+                        Text("Delete Recipe")
+                            .font(.subheadline)
+                            .frame(width: 125, height: 25)
+                            .background(Capsule()
+                                .fill(.white)
+                                .stroke(.gray, lineWidth: 1))
+                            .padding()
+                            .padding([.leading, .trailing], 20)
+                    }
                 }
                 .frame(maxWidth: .infinity)
 
@@ -60,11 +75,14 @@ struct SavedCuisineDetail: View {
                     }.font(Font.caption)
                     
                     VStack(alignment: .center) {
-                        let calorieInfo = foodItem.nutrition.nutrients[0]
-                        Text("Calories").bold()
-                        HStack {
-                            Text("\(Int(calorieInfo.amount)) \(calorieInfo.unit)")
+                        if let food = foodItem.nutrition {
+                            let calorieInfo = food.nutrients[0]
+                            Text("Calories").bold()
+                            HStack {
+                                Text("\(Int(calorieInfo.amount)) \(calorieInfo.unit)")
+                            }
                         }
+                        
                     }.font(Font.caption)
                     
                     VStack(alignment: .center) {
@@ -84,26 +102,29 @@ struct SavedCuisineDetail: View {
                 )
             ){
                 if showNutritionFacts {
-                    let nutrients = foodItem.nutrition.nutrients
-                    let nutrientSize: Int = nutrients.count
-                    
-                    let products = getNutritionProducts(nutrients)
-                    HStack {
-                        NutritionChart(products: products)
-                    }
-                    
-                    ForEach(0..<nutrientSize) { index in
-                        let nutrient = nutrients[index]
-                        let nutrientAmountRounded = round(nutrient.amount, 3)
+                    if let nutrition = foodItem.nutrition{
+                        let nutrients = nutrition.nutrients
+                        let nutrientSize: Int = nutrients.count
                         
+                        let products = getNutritionProducts(nutrients)
                         HStack {
-                            Text("\(nutrient.name)")
-                            Spacer()
-                            Text("\(nutrientAmountRounded) \(nutrient.unit)")
+                            NutritionChart(products: products)
                         }
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        
+                        ForEach(0..<nutrientSize) { index in
+                            let nutrient = nutrients[index]
+                            let nutrientAmountRounded = round(nutrient.amount, 3)
+                            
+                            HStack {
+                                Text("\(nutrient.name)")
+                                Spacer()
+                                Text("\(nutrientAmountRounded) \(nutrient.unit)")
+                            }
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                        }
                     }
+                  
                 }
             }
             
@@ -202,6 +223,18 @@ struct SavedCuisineDetail: View {
             }
             
         }.listSectionSpacing(0.5)
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(title: Text("Delete?"),
+                      primaryButton: Alert.Button.default(Text("Delete"), action: {
+                        showDeleteAlert = false
+                        self.presentationMode.wrappedValue.dismiss()
+                        completion(foodItem)
+                      }),
+                      secondaryButton: Alert.Button.cancel(Text("Cancel"), action: {
+                        showDeleteAlert = false
+                      })
+                )
+            }
     }
     
     func round(_ num: Float, _ places: Int) -> String {

@@ -33,7 +33,7 @@ final class FoodItemData: Identifiable  {
     var image: String
     var missedIngredients: [RecipeIngredientData]
     var analyzedInstructions:  [RecipeInstructionsData]
-    var nutrition: RecipeNutritionData
+    var nutrition: RecipeNutritionData?
     var vegetarian: Bool
     var vegan: Bool
     var glutenFree: Bool

@@ -7,11 +7,10 @@
 
 import Foundation
 
-class ViewModel: ObservableObject {
-    static let shared = ViewModel()
+class FilterViewModel: ObservableObject {
+    static let shared = FilterViewModel()
 
     @Published var selectedCusine: String = ""
     @Published var cuisinesFilter: Dictionary<String, [FoodItem]> = [:]
     @Published var fetching: Bool = false
-    @Published var currentGallery: [Data] = []
 }

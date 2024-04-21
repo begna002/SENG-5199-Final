@@ -8,15 +8,16 @@
 import SwiftUI
 import SwiftData
 
+enum Tab {
+    case explore
+    case search
+    case saved
+}
+
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var selection: Tab = .explore
-    enum Tab {
-        case explore
-        case search
-        case saved
-    }
     
     var body: some View {
         TabView(selection: $selection) {
@@ -39,9 +40,4 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
     }
 
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

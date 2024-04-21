@@ -5,6 +5,10 @@
 //  Created by Moti Begna on 4/5/24.
 //
 
+/* Retries are needed when decoding responses from API due to issues with the server sometimes
+ responding with incorrect data
+ */
+
 import Foundation
 
 let baseUrl = "https://api.spoonacular.com/"

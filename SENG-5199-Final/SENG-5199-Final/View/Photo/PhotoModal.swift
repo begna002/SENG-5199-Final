@@ -30,14 +30,9 @@ struct PhotoModal: View {
     
     func dateFormatter(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//        let date = dateFormatter.date(from: dateString)
-        
-  
-//            date.addTimeInterval(TimeInterval(-18000))
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .short
-            return dateFormatter.string(from: date)
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: date)
             
       
     }

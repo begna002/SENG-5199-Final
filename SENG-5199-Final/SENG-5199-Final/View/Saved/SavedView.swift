@@ -11,6 +11,7 @@ import SwiftData
 
 struct SavedView: View {
     @Environment(\.modelContext) private var modelContext
+
     @Query private var cuisines: [FoodItemData]
     @State var showDeleteAlert: Bool = false
     let columns = [
@@ -38,10 +39,13 @@ struct SavedView: View {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(cuisines) { food in
                         NavigationLink {
-                            SavedCuisineDetail(foodItem: food)
+                            SavedCuisineDetail(foodItem: food, completion: { foodItem in
+                                modelContext.delete(food)
+                            })
                         } label: {
                             SavedCuisineItem(foodItem: food)
                         }
+                        
                     }
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(Color.clear)
