@@ -117,14 +117,55 @@ func getRandomIngrediants(completion: @escaping (FoodResponse?) -> Void, _ retry
             completion(foodResponse)
         } catch {
           print("Error decoding JSON data: \(error), url: \(url)")
-        if (retryCount < 3) {
-            print("Retrying call to getRandomIngrediants")
-            var retry = retryCount + 1
-            getRandomIngrediants(completion: { response in
-                 completion(response) }, retry)
-        } else {
+            if (retryCount < 3) {
+                print("Retrying call to getRandomIngrediants")
+                var retry = retryCount + 1
+                getRandomIngrediants(completion: { response in
+                     completion(response) }, retry)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    task.resume()
+}
+
+func getAutocomplete(_ query: String, completion: @escaping ([AutocompleteResult]?) -> Void, _ retryCount: Int = 0){
+    if (query == "") {
+        completion(nil)
+        return
+    }
+    
+    let url = URL(string: "\(baseUrl)/recipes/autocomplete?query=\(query)&number=10&apiKey=19066718cb0143a080d795d5c3a5cd22" )!
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    
+    let session = URLSession.shared
+    let task = session.dataTask(with: request) { (data, response, error) in
+        if let error = error {
+            print("Error fetching cuisine ingrediants: \(error)")
             completion(nil)
         }
+
+        guard let responseData = data else {
+            completion(nil)
+            return
+        }
+        
+        do {
+            let foodResponse = try JSONDecoder().decode([AutocompleteResult].self, from: responseData)
+            completion(foodResponse)
+        } catch {
+            print("Error decoding JSON data: \(error), url: \(url)")
+            if (retryCount < 3) {
+                print("Retrying call to getAutocomplete")
+                let retry = retryCount + 1
+                getAutocomplete(query, completion: { response in
+                     completion(response) }, retry)
+            } else {
+                completion(nil)
+            }
+            completion(nil)
         }
     }
     task.resume()

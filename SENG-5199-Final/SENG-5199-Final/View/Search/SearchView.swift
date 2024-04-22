@@ -12,10 +12,12 @@ import SwiftData
 struct SearchView: View {
     @State var text: String = ""
     @State var cuisines: [FoodItem]?
+    @State var autocompleteTerms: [AutocompleteResult]?
     @State var fetching: Bool = false
     @State var offset: Int = 0
     @State var moreDisabled: Bool = false
     @State var error: ErrorType?
+    @State var autoCompleteOpen: Bool = false
     
     @Environment(\.modelContext) private var modelContext
     @Query private var recentSearches: [RecentSearch]
@@ -36,6 +38,7 @@ struct SearchView: View {
                                     Button(action: {
                                         text = ""
                                         cuisines = nil
+                                        error = nil
                                       }) {
                                           Image(systemName: "xmark.circle")
                                                                 .frame(width: 40, height: 40)
@@ -52,6 +55,12 @@ struct SearchView: View {
                         .onSubmit {
                             submitSearch()
                         }
+                        .onChange(of: text) {
+                            if (!fetching) {
+                                autoCompleteOpen = true
+                                fetchAutocomplete(text)
+                            }
+                        }
                 }.frame(height: 50)
                 
                 if (fetching) {
@@ -63,7 +72,16 @@ struct SearchView: View {
                 }
                 
                 Spacer()
-                if let cuisines {
+                if (autoCompleteOpen) {
+                    if let autocompleteTerms {
+                        AutocompleteView(autocompleteTerms: autocompleteTerms, userTerm: text, doSearch: { term in
+                            text = term
+                            submitSearch()
+                        }, closeView: {
+                            autoCompleteOpen = false
+                        })
+                    }
+                } else if let cuisines {
                     SearchResults(cuisines: cuisines, isSearch: true, getMore: {
                         fetchMore()
                     }, moreDisabled: moreDisabled)
@@ -84,6 +102,8 @@ struct SearchView: View {
     
     func submitSearch() {
         if (text != "") {
+            autoCompleteOpen = false
+            autocompleteTerms = nil
             cuisines = nil
             fetching = true
             error = nil
@@ -107,8 +127,41 @@ struct SearchView: View {
         }
     }
     
+    func fetchAutocomplete(_ query: String) {
+        if (text != "") {
+            error = nil
+            getAutocomplete(query, completion: { response in
+                if let response {
+                    if (!response.isEmpty) {
+                        var termsThatStart: [AutocompleteResult] = []
+                        var otherTerms: [AutocompleteResult] = []
+                        for str in response {
+                            let title: String = String(str.title.lowercased())
+                            if (title.hasPrefix(text.lowercased())) {
+                                termsThatStart.append(str)
+                            } else {
+                                otherTerms.append(str)
+                            }
+                        }
+                    
+                        autocompleteTerms = nil
+                        autocompleteTerms = termsThatStart + otherTerms
+                    } else {
+                        error = .NoResults
+                    }
+                } else {
+                    error = .Exception
+                }
+            })
+        } else {
+            autoCompleteOpen = false
+        }
+    }
+    
     func fetchMore() {
         offset += 20
+        autocompleteTerms = nil
+        autoCompleteOpen = false
         if (text != "") {
             getIngrediants(offset, text, completion: { response in
                 fetching = false

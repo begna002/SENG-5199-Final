@@ -38,6 +38,8 @@
 		74C21CE12BD479120025E368 /* PhotoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C21CE02BD479120025E368 /* PhotoModal.swift */; };
 		74E7B6302BD59F4E00C4E0BA /* RecentSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B62F2BD59F4E00C4E0BA /* RecentSearches.swift */; };
 		74E7B6322BD5A07C00C4E0BA /* RecentSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6312BD5A07C00C4E0BA /* RecentSearchView.swift */; };
+		74E7B6342BD6D01C00C4E0BA /* AutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6332BD6D01C00C4E0BA /* AutocompleteView.swift */; };
+		74E7B6362BD6D06600C4E0BA /* AutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6352BD6D06600C4E0BA /* AutocompleteResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		74C21CE02BD479120025E368 /* PhotoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModal.swift; sourceTree = "<group>"; };
 		74E7B62F2BD59F4E00C4E0BA /* RecentSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearches.swift; sourceTree = "<group>"; };
 		74E7B6312BD5A07C00C4E0BA /* RecentSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchView.swift; sourceTree = "<group>"; };
+		74E7B6332BD6D01C00C4E0BA /* AutocompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteView.swift; sourceTree = "<group>"; };
+		74E7B6352BD6D06600C4E0BA /* AutocompleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,7 @@
 				740DDC8C2BCC82E6003D8501 /* FoodDataModel.swift */,
 				74C21CCD2BD2CEB30025E368 /* ViewModel.swift */,
 				74E7B62F2BD59F4E00C4E0BA /* RecentSearches.swift */,
+				74E7B6352BD6D06600C4E0BA /* AutocompleteResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				740DDBF22BCAC22A003D8501 /* SearchView.swift */,
 				740DDC692BCC7882003D8501 /* SearchResults.swift */,
 				74E7B6312BD5A07C00C4E0BA /* RecentSearchView.swift */,
+				74E7B6332BD6D01C00C4E0BA /* AutocompleteView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -298,12 +304,14 @@
 				740DDC912BCC8B22003D8501 /* SavedCuisineDetail.swift in Sources */,
 				74C21CCE2BD2CEB30025E368 /* ViewModel.swift in Sources */,
 				740DDBE52BC06C99003D8501 /* CuisineView.swift in Sources */,
+				74E7B6342BD6D01C00C4E0BA /* AutocompleteView.swift in Sources */,
 				740DDC6F2BCC80F7003D8501 /* SavedView.swift in Sources */,
 				74C21CDF2BD471600025E368 /* PhotoAccessView.swift in Sources */,
 				740DDBE72BC06F54003D8501 /* CuisineRow.swift in Sources */,
 				740DDBED2BCABBAF003D8501 /* CusineType.swift in Sources */,
 				740DDBCE2BC065D4003D8501 /* ContentView.swift in Sources */,
 				74E7B6322BD5A07C00C4E0BA /* RecentSearchView.swift in Sources */,
+				74E7B6362BD6D06600C4E0BA /* AutocompleteResponse.swift in Sources */,
 				74C21CCA2BD2AA0F0025E368 /* CuisineError.swift in Sources */,
 				740DDBF52BCADB73003D8501 /* SectionHeader.swift in Sources */,
 				740DDC932BCC9136003D8501 /* CusineTab.swift in Sources */,

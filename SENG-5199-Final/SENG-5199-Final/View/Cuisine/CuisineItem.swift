@@ -14,6 +14,8 @@ struct CuisineItem: View {
     var height: CGFloat
     var scale: CGFloat = 2
     
+    @State var imageLoaded: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             AsyncImage(url: URL(string: foodItem.image),

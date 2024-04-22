@@ -211,7 +211,7 @@ struct SavedCuisineDetail: View {
                     
                     ForEach(instructions) { instructionStep in
                         HStack {
-                            Text("\(instructionStep.number)")
+                            Text("\(instructionStep.number)").padding(.trailing, 10)
                             Text(instructionStep.step)
                         }
                     }
