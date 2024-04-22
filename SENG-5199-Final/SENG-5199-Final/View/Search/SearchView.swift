@@ -100,6 +100,7 @@ struct SearchView: View {
                     })
                 }
             }
+            .scrollDismissesKeyboard(.immediately)
             .navigationTitle("Search")
         }
     }
