@@ -19,6 +19,8 @@ struct SearchView: View {
     @State var error: ErrorType?
     @State var autoCompleteOpen: Bool = false
     
+    @FocusState private var textFieldFocused: Bool
+
     @Environment(\.modelContext) private var modelContext
     @Query private var recentSearches: [RecentSearch]
 
@@ -61,6 +63,7 @@ struct SearchView: View {
                                 fetchAutocomplete(text)
                             }
                         }
+                        .focused($textFieldFocused)
                 }.frame(height: 50)
                 
                 if (fetching) {
@@ -76,6 +79,7 @@ struct SearchView: View {
                     if let autocompleteTerms {
                         AutocompleteView(autocompleteTerms: autocompleteTerms, userTerm: text, doSearch: { term in
                             text = term
+                            textFieldFocused = false
                             submitSearch()
                         }, closeView: {
                             autoCompleteOpen = false
@@ -154,6 +158,8 @@ struct SearchView: View {
                 }
             })
         } else {
+            cuisines = nil
+            error = nil
             autoCompleteOpen = false
         }
     }
