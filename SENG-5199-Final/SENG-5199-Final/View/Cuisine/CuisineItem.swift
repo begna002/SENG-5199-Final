@@ -13,21 +13,24 @@ struct CuisineItem: View {
     var width: CGFloat
     var height: CGFloat
     var scale: CGFloat = 2
+    @State var image: UIImage?
     
-    @State var imageLoaded: Bool = false
+    @State var imageFailed: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: foodItem.image),
-                              scale: scale){ phase in
-                    if let image = phase.image {
-                        image
-                    } else{
-                        
-                    }
-                }
-                .frame(width: width, height: height)
-                .cornerRadius(5)
+            if let image {
+                Image(uiImage: image)
+                    .frame(width: width, height: height)
+                    .cornerRadius(5)
+            } else if imageFailed {
+                Image("foodDefault")
+                    .scaleEffect(0.5)
+                    .frame(width: width, height: height)
+                    .cornerRadius(5)
+            } else {
+                PlaceholderItemView()
+            }
             Text(foodItem.title)
                 .frame(width: 140)
                     .truncationMode(.tail)
@@ -35,5 +38,14 @@ struct CuisineItem: View {
                 .foregroundStyle(.white)
         }
         .padding(.leading, 15)
+        .task {
+            loadImageFromURL(urlString: foodItem.image, completion: { response in
+                if let response {
+                    image = response
+                } else {
+                    imageFailed = true
+                }
+            })
+        }
     }
 }

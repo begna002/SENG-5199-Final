@@ -40,6 +40,7 @@
 		74E7B6322BD5A07C00C4E0BA /* RecentSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6312BD5A07C00C4E0BA /* RecentSearchView.swift */; };
 		74E7B6342BD6D01C00C4E0BA /* AutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6332BD6D01C00C4E0BA /* AutocompleteView.swift */; };
 		74E7B6362BD6D06600C4E0BA /* AutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6352BD6D06600C4E0BA /* AutocompleteResponse.swift */; };
+		74E7B6382BD74B1C00C4E0BA /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7B6372BD74B1C00C4E0BA /* ImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		74E7B6312BD5A07C00C4E0BA /* RecentSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchView.swift; sourceTree = "<group>"; };
 		74E7B6332BD6D01C00C4E0BA /* AutocompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteView.swift; sourceTree = "<group>"; };
 		74E7B6352BD6D06600C4E0BA /* AutocompleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteResponse.swift; sourceTree = "<group>"; };
+		74E7B6372BD74B1C00C4E0BA /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				740DDBDF2BC068CA003D8501 /* FoodSearchService.swift */,
+				74E7B6372BD74B1C00C4E0BA /* ImageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				740DDBE22BC06979003D8501 /* FoodResponse.swift in Sources */,
+				74E7B6382BD74B1C00C4E0BA /* ImageService.swift in Sources */,
 				74C21CD52BD461510025E368 /* PhotoView.swift in Sources */,
 				740DDBF12BCABE50003D8501 /* CuisineDetail.swift in Sources */,
 				740DDC682BCC6F45003D8501 /* CuisinePlaceholderView.swift in Sources */,
