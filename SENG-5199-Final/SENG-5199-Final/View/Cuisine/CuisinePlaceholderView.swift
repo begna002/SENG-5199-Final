@@ -11,13 +11,7 @@ import SwiftUI
 struct CusinePlaceholderView: View {
   var body: some View {
     List {
-        HStack {
-            Rectangle()
-                .fill(.gray)
-                .frame(height: 200)
-                .cornerRadius(5)
-        }
-        .listRowBackground(Color.clear)
+        PlaceholderTabView()
       ForEach (0..<5) { _ in
         HStack {
             PlaceholderRowView()
@@ -66,5 +60,17 @@ struct PlaceholderItemView: View {
       }
       .padding(.leading, 15)
       .redacted(reason: .placeholder)
+  }
+}
+
+struct PlaceholderTabView: View {
+  var body: some View {
+      HStack {
+          Rectangle()
+              .fill(.gray)
+              .frame(height: 200)
+              .cornerRadius(5)
+      }
+      .listRowBackground(Color.clear)
   }
 }

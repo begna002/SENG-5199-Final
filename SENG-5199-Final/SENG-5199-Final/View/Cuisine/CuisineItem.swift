@@ -14,7 +14,6 @@ struct CuisineItem: View {
     var height: CGFloat
     var scale: CGFloat = 2
     @State var image: UIImage?
-    
     @State var imageFailed: Bool = false
     
     var body: some View {
@@ -31,7 +30,8 @@ struct CuisineItem: View {
             } else {
                 PlaceholderItemView()
             }
-            Text(foodItem.title)
+            Text(foodItem.title + "\n")
+                .lineLimit(2)
                 .frame(width: 140)
                     .truncationMode(.tail)
                 .font(.caption)

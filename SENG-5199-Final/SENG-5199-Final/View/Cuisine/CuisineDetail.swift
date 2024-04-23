@@ -17,7 +17,9 @@ struct CusineDetail: View {
     @State var showNutritionFacts = false
     @State var saveDisabled = false
     @State var showSaveAlert = false
-
+    @State var image: UIImage?
+    @State var imageFailed: Bool = false
+    
     @StateObject var filter = ViewModel.shared
 
     @Environment(\.modelContext) private var modelContext
@@ -30,16 +32,18 @@ struct CusineDetail: View {
                 VStack(alignment: .center) {
                     VStack(alignment: .center) {
                         Text(foodItem.title)
-                        AsyncImage(url: URL(string: foodItem.image),
-                                   scale: 1) {phase in
-                                if let image = phase.image {
-                                    image
-                                } else{
-                                   
-                                }
-                            }
-                        .frame(width: 300, height: 250)
-                        .cornerRadius(5)
+                        if let image {
+                            Image(uiImage: image)
+                                .frame(width: 300, height: 250)
+                                .cornerRadius(5)
+                        } else if imageFailed {
+                            Image("foodDefault")
+                                .scaleEffect(0.5)
+                                .frame(width: 300, height: 250)
+                                .cornerRadius(5)
+                        } else {
+                            PlaceholderItemView()
+                        }
                         
                         Button(action: {
                             showSaveAlert = true
@@ -212,6 +216,14 @@ struct CusineDetail: View {
             if (isSaved()) {
                 saveDisabled = true
             }
+            
+            loadImageFromURL(urlString: foodItem.image, completion: { response in
+                if let response {
+                    image = response
+                } else {
+                    imageFailed = true
+                }
+            })
         }
         .alert(isPresented: $showSaveAlert) {
             Alert(title: Text("Save recipe?"),

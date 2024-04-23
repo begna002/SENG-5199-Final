@@ -17,6 +17,8 @@ struct SavedCuisineDetail: View {
     @State var showGallery = true
     @State var showDeleteAlert = false
     @State var calorieAmount: Float = 0.0
+    @State var image: UIImage?
+    @State var imageFailed: Bool = false
     
     @StateObject var filter = ViewModel.shared
 
@@ -34,16 +36,18 @@ struct SavedCuisineDetail: View {
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                 VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text(foodItem.title)
-                    AsyncImage(url: URL(string: foodItem.image),
-                               scale: 1) {phase in
-                            if let image = phase.image {
-                                image
-                            } else{
-                                
-                            }
-                        }
-                    .frame(width: 300, height: 250)
-                    .cornerRadius(5)
+                    if let image {
+                        Image(uiImage: image)
+                            .frame(width: 300, height: 250)
+                            .cornerRadius(5)
+                    } else if imageFailed {
+                        Image("foodDefault")
+                            .scaleEffect(0.5)
+                            .frame(width: 300, height: 250)
+                            .cornerRadius(5)
+                    } else {
+                        PlaceholderItemView()
+                    }
                     
                     Button(action: {
                         showDeleteAlert = true
@@ -255,6 +259,14 @@ struct SavedCuisineDetail: View {
                     }
                 }
             }
+            
+            loadImageFromURL(urlString: foodItem.image, completion: { response in
+                if let response {
+                    image = response
+                } else {
+                    imageFailed = true
+                }
+            })
         }
     }
     

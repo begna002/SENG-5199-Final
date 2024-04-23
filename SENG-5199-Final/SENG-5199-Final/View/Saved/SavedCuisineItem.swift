@@ -10,25 +10,39 @@ import SwiftUI
 
 struct SavedCuisineItem: View {
     var foodItem: FoodItemData
-
+    @State var image: UIImage?
+    @State var imageFailed: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: foodItem.image),
-                              scale: 2) {phase in
-                    if let image = phase.image {
-                        image
-                    } else{
-                        
-                    }
-                }
-                .frame(width: 140, height: 140)
-                .cornerRadius(5)
-            Text(foodItem.title)
+            if let image {
+                Image(uiImage: image)
+                    .frame(width: 140, height: 140)
+                    .cornerRadius(5)
+            } else if imageFailed {
+                Image("foodDefault")
+                    .scaleEffect(0.5)
+                    .frame(width: 140, height: 140)
+                    .cornerRadius(5)
+            } else {
+                PlaceholderItemView()
+            }
+            Text(foodItem.title + "\n")
+                .lineLimit(2)
                 .frame(width: 140)
                     .truncationMode(.tail)
                 .font(.caption)
                 .foregroundStyle(.white)
         }
         .padding(.leading, 15)
+        .task {
+            loadImageFromURL(urlString: foodItem.image, completion: { response in
+                if let response {
+                    image = response
+                } else {
+                    imageFailed = true
+                }
+            })
+        }
     }
 }
