@@ -83,6 +83,7 @@ struct SearchView: View {
                             submitSearch()
                         }, closeView: {
                             autoCompleteOpen = false
+                            textFieldFocused = false
                         })
                     }
                 } else if let cuisines {

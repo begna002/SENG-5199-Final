@@ -25,6 +25,7 @@ struct CuisineTabItem: View {
                     .clipped()
                     .listRowInsets(EdgeInsets())
                     .background(Color.clear)
+                    .cornerRadius(5)
             } else if imageFailed {
                 Image("foodDefault")
                     .scaledToFill()
@@ -32,6 +33,7 @@ struct CuisineTabItem: View {
                     .clipped()
                     .listRowInsets(EdgeInsets())
                     .background(Color.clear)
+                    .cornerRadius(5)
             } else {
                 PlaceholderTabView()
             }

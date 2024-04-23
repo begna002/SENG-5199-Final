@@ -22,12 +22,20 @@ struct CuisineFilter: View {
                             Button(action: {
                                 filterCuisine(cuisine.rawValue)
                             }) {
-                                Text(cuisine.rawValue)
-                                    .font(.subheadline)
-                                    .frame(width: 125, height: 25)
-                                    .background(Capsule()
-                                        .fill(filter.selectedCusine == cuisine.rawValue ? .gray : .white)
-                                        .stroke(.gray, lineWidth: 1))
+                                HStack(alignment: .center) {
+                                    Image(cuisine.rawValue)
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .padding(.leading, 20)
+                                        .foregroundColor(.blue)
+                                    Text(cuisine.rawValue)
+                                        .font(.subheadline)
+                                        .frame(width: cuisine == .Mediterranean ? 130 : 105, height: 40)
+                                        .offset(x: cuisine == .Mediterranean ? -10 : -20)
+                                }
+                                .background(Capsule()
+                                    .fill(filter.selectedCusine == cuisine.rawValue ? .gray : .white)
+                                    .stroke(.gray, lineWidth: 1))
                             }
                             .id(cuisine)
                         }
@@ -41,8 +49,6 @@ struct CuisineFilter: View {
                 }
             }
         }
-        
-//        .listRowInsets(EdgeInsets())
         .listRowBackground(Color.clear)
     }
     
@@ -72,4 +78,8 @@ struct CuisineFilter: View {
             return
         }
     }
+}
+
+#Preview {
+    CuisineFilter()
 }
