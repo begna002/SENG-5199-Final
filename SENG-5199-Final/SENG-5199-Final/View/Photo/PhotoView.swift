@@ -31,7 +31,10 @@ struct PhotoView: View {
                                                             .scaledToFit()
                                 }.sheet(isPresented: $isShowingSheet,
                                         onDismiss: { isShowingSheet = false } ) {
-                                    PhotoModal(image: uiImage, imageData: image)
+                                    PhotoModal(image: uiImage, imageData: image, completion: {
+                                        isShowingSheet = false
+                                        deleteImage(image)
+                                    })
                                      
                                  }
                             }
@@ -65,6 +68,21 @@ struct PhotoView: View {
         }
         .task {
             selectedImages = foodItem.images
+        }
+    }
+    
+    func deleteImage(_ imageToDelete: ImageData) {
+        for (index, image) in foodItem.images.enumerated() {
+            if (image.id == imageToDelete.id) {
+                foodItem.images.remove(at: index)
+            }
+        }
+        
+        let tempImages = selectedImages
+        selectedImages = nil
+        if let tempImages {
+            let newImageList = tempImages.filter { $0.id != imageToDelete.id }
+            selectedImages = newImageList
         }
     }
 }
