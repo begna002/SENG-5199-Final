@@ -13,7 +13,7 @@ struct SENG_5199_FinalApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             FoodItemData.self,
-            RecentSearch.self
+            RecentSearchModel.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

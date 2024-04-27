@@ -12,7 +12,7 @@ import SwiftData
 struct RecentSearchView: View {
     @Environment(\.modelContext) private var modelContext
     
-    @Query private var searchTerms: [RecentSearch]
+    @Query private var searchTerms: [RecentSearchModel]
     var doSearch: (String) -> Void
     @State var isConfirmDelete: Bool = false
     
@@ -62,7 +62,7 @@ struct RecentSearchView: View {
     
     func deleteAll() {
         do {
-            try modelContext.delete(model: RecentSearch.self)
+            try modelContext.delete(model: RecentSearchModel.self)
         } catch {
             print("Failed to clear all Recent Searches.")
         }

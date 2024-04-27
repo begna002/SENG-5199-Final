@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class RecentSearch: Identifiable {
+final class RecentSearchModel: Identifiable {
     var term: String
     var id = UUID()
 

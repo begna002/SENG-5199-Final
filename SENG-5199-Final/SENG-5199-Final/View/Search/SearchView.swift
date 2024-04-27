@@ -22,7 +22,7 @@ struct SearchView: View {
     @FocusState private var textFieldFocused: Bool
 
     @Environment(\.modelContext) private var modelContext
-    @Query private var recentSearches: [RecentSearch]
+    @Query private var recentSearches: [RecentSearchModel]
 
     var body: some View {
         NavigationStack {
@@ -199,7 +199,7 @@ struct SearchView: View {
             }
         }
         
-        let newTerm: RecentSearch = RecentSearch(termToSave)
+        let newTerm: RecentSearchModel = RecentSearchModel(termToSave)
         modelContext.insert(newTerm)
     }
 }
