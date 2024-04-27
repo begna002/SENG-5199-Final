@@ -19,19 +19,31 @@ struct NutritionChart: View {
     @State var products: [Product]
     
     var body: some View {
-        Chart(products) { product in
-            SectorMark(
-                angle: .value(
-                    Text(verbatim: product.title),
-                    product.amount
+        VStack {
+            Text("Macro Calorie Ratio")
+            Chart(products) { product in
+                SectorMark(
+                    angle: .value(
+                        Text(verbatim: product.title),
+                        product.amount
+                    )
                 )
-            )
-            .foregroundStyle(
-                by: .value(
-                    Text(verbatim: product.title),
-                    product.title
+                .foregroundStyle(
+                    by: .value(
+                        Text(verbatim: product.title),
+                        "\(product.title): (\(round(Float(product.amount) * 100, 2))%)"
+                    )
                 )
-            )
+            }
         }
+    }
+    
+    func round(_ num: Float, _ places: Int) -> String {
+        let nf = NumberFormatter()
+        nf.numberStyle = .decimal
+        nf.minimumFractionDigits = places
+        nf.maximumFractionDigits = places
+        guard let number =  nf.string(from: NSNumber(value: num)) else { return "0" }
+        return number
     }
 }
