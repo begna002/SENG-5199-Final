@@ -8,4 +8,8 @@
 import Foundation
 
 @MainActor class NavigationViewModel: ObservableObject {
+    static let shared = NavigationViewModel()
+
+    @Published var navToHome: Bool = false
+    @Published var tabSelection: Tab = .explore
 }

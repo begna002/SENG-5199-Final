@@ -16,11 +16,11 @@ enum Tab {
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @StateObject var filter = ViewModel.shared
+    @StateObject var navigation = NavigationViewModel.shared
     @State var currentTab: Tab = Tab.explore
 
     var body: some View {
-        TabView(selection: $filter.tabSelection) {
+        TabView(selection: $navigation.tabSelection) {
             CusineView()
                 .tabItem {
                     Label("Explore", systemImage: "fork.knife.circle")
@@ -37,9 +37,9 @@ struct ContentView: View {
                 }
                 .tag(Tab.saved)
         }
-        .onReceive(filter.$tabSelection) { selection in
+        .onReceive(navigation.$tabSelection) { selection in
             if (selection == currentTab) {
-                filter.navToHome.toggle()
+                navigation.navToHome.toggle()
             } else {
                 currentTab = selection
             }

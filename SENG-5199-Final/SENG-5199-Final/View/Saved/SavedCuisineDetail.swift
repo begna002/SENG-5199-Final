@@ -21,6 +21,7 @@ struct SavedCuisineDetail: View {
     @State var imageFailed: Bool = false
     
     @StateObject var filter = ViewModel.shared
+    @StateObject var navigation = NavigationViewModel.shared
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
@@ -248,7 +249,7 @@ struct SavedCuisineDetail: View {
                   })
             )
         }
-        .onChange(of: filter.navToHome) {
+        .onChange(of: navigation.navToHome) {
             self.presentationMode.wrappedValue.dismiss()
         }
         .task {
