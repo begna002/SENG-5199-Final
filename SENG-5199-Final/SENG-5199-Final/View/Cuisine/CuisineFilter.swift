@@ -13,8 +13,6 @@ struct CuisineFilter: View {
 
     var body: some View {
         VStack {
-//            Text("Filter")
-//                .font(.subheadline)
             ScrollViewReader { value in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: 12) {

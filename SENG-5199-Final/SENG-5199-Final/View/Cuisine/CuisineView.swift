@@ -93,8 +93,3 @@ struct CusineView: View {
         })
     }    
 }
-
-
-//#Preview {
-//    CusineView()
-//}

@@ -32,11 +32,3 @@ func loadImageFromURL(urlString: String, completion: @escaping (UIImage?) -> Voi
     }
     task.resume()
 }
-
-//    private func setImageCache(image: UIImage, key: String) {
-//        imageCache?.setObject(image, forKey: key as NSString)
-//    }
-//
-//    private func getImageFromCache(from key: String) -> UIImage? {
-//        return imageCache?.object(forKey: key as NSString) as? UIImage
-//    }

@@ -180,7 +180,7 @@ struct SearchView: View {
                         }
                         let savedCuisines = cuisines
                         cuisines = nil
-                        if var savedCuisines {
+                        if let savedCuisines {
                             let newList = savedCuisines + response.results
                             cuisines = newList
                         } else {

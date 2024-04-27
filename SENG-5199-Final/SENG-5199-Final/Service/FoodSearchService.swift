@@ -43,7 +43,7 @@ func getIngrediants(_ offset: Int, _ query: String, completion: @escaping (FoodR
             print("Error decoding JSON data: \(error), url: \(url)")
             if (retryCount < 3) {
                 print("Retrying call to getIngrediantsByCusine")
-                var retry = retryCount + 1
+                let retry = retryCount + 1
                 getIngrediants(offset, query, completion: { response in
                      completion(response) }, retry)
             } else {
@@ -83,7 +83,7 @@ func getIngrediantsByCusine(number: Int = 10, _ cuisine: String, completion: @es
             print("Error decoding JSON data: \(error), url: \(url)")
             if (retryCount < 3) {
                 print("Retrying call to getIngrediantsByCusine")
-                var retry = retryCount + 1
+                let retry = retryCount + 1
                 getIngrediantsByCusine(number: number, cuisine, completion: { response in
                      completion(response) }, retry)
             } else {
@@ -119,7 +119,7 @@ func getRandomIngrediants(completion: @escaping (FoodResponse?) -> Void, _ retry
           print("Error decoding JSON data: \(error), url: \(url)")
             if (retryCount < 3) {
                 print("Retrying call to getRandomIngrediants")
-                var retry = retryCount + 1
+                let retry = retryCount + 1
                 getRandomIngrediants(completion: { response in
                      completion(response) }, retry)
             } else {
