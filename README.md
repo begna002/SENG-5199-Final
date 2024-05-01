@@ -6,5 +6,7 @@
 - Use the filter at the top to filter by specific cuisines
 - Navigate the "Search" Tab to find specific recipes
 - Search includes a couple of well-known features such as a recent search section and autocomplete
-- Once you find a recipe you like, you can save it in the app. It will then show up in the "Saved"
+- Once you find a recipe you like, you can save it in the app. It will then show up in the "Saved" Tab
 - Here, you can even select a specific recipe and take a photo for that recipe for when you end up actually making it!
+
+Spoonacular API: https://spoonacular.com/food-api/docs#Search-Recipes-Complex
