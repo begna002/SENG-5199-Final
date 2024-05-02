@@ -14,4 +14,5 @@
 - Camera
 
 Spoonacular API: https://spoonacular.com/food-api/docs#Search-Recipes-Complex
+
 App Showcase Video Link: https://www.youtube.com/watch?v=8XmdqMwBF9Y&ab_channel=MotiBegna
