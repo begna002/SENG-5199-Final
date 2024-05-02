@@ -9,4 +9,9 @@
 - Once you find a recipe you like, you can save it in the app. It will then show up in the "Saved" Tab
 - Here, you can even select a specific recipe and take a photo for that recipe for when you end up actually making it!
 
+## Mobile-Centric features
+- Advanced UI/Navigation
+- Camera
+
 Spoonacular API: https://spoonacular.com/food-api/docs#Search-Recipes-Complex
+App Showcase Video Link: https://www.youtube.com/watch?v=8XmdqMwBF9Y&ab_channel=MotiBegna
